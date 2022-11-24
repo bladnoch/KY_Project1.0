@@ -1,4 +1,4 @@
-class Userchecker:
+class Admin:
     def __init__(self):
         user_Checker = True
         while (user_Checker):
@@ -13,9 +13,6 @@ class Userchecker:
             else:
                 print("please insert right number")
 
-
-
-
 class Menu:
     def __init__(self): #menu 생성자(Constructor)
         menu = input("1. nu customer  2. items 0. off")
@@ -27,8 +24,8 @@ class Menu:
             print("off")
 
 
-
-admin=Userchecker()
-print("what you wanna do")
-test=Menu()
+if __name__ == '__main__':
+    admin=Admin()
+    print("what you wanna do")
+    test=Menu()
 
