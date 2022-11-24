@@ -11,7 +11,8 @@ class Admin:
                 print(user_ID, user_PW)
                 user_Checker = False
             else:
-                print("please insert right number")
+                print("wrong info")
+                print("")
 
 class Menu:
     def __init__(self): #menu 생성자(Constructor)
