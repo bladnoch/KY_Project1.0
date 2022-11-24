@@ -1,3 +1,14 @@
+class Menu:
+    def __init__(self): #menu 생성자(Constructor)
+        menu = input("1. nu customer  2. items 0. off")
+        if (menu == "1") | ("nu" in menu) | ("customer" in menu):
+            print("1 nu customer")
+        elif (menu == "2") | ("items" in menu):
+            print("2 items")
+        elif (menu == "0") | ("off" in menu):
+            print("off")
+
+
 
 # user_Checker=True
 # while(user_Checker):
@@ -12,7 +23,16 @@
 #     else:
 #         print("please insert right number")
 
+
+
 print("what you wanna do")
-menu = input("1. nu customer  2. items")
-if (menu=="1") | ("nu" in menu):
-    print("yessss!")
+
+test=Menu()
+
+# menu = input("1. nu customer  2. items 0. off")
+# if (menu=="1") | ("nu" in menu) | ("customer" in menu):
+#     print("1 nu customer")
+# elif (menu=="2") | ("items" in menu):
+#     print("2 items")
+# elif (menu=="0") | ("off" in menu):
+#     print("off")
