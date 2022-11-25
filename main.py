@@ -22,17 +22,14 @@ class Admin:
 #계산
 class Money:
     pay=1000
-    payed=100
-    change=900
+    payed=0
+    change=1000
     def setPay(self, ppay):
         Money.pay=ppay
     def setPayed(self,ppayed):
         Money.payed=ppayed
     def setChange(self,cchange):
         Money.change=cchange
-
-
-
 #메뉴
 class Menu:
     tf=True
@@ -42,7 +39,7 @@ class Menu:
             print(">>----------------------------")
             print("id","고인명","상주명","빈소")
             print("빈소기간","안치기간")
-            print("수닙금액 :",Money.pay,"   받은 :",Money.payed,"   거스름돈 :",Money.change)
+            print("수납금액 :",Money.pay,"   받은금액 :",Money.payed,"   거스름돈 :",Money.change)
             print("items")
             print("------------------------------")
 
@@ -66,7 +63,7 @@ class Menu:
 
 
 if __name__ == '__main__':
-    # admin=Admin()
+    admin=Admin()
     menu=Menu()
     money=Money()
 
