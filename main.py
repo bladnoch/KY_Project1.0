@@ -1,3 +1,25 @@
+# id : dong
+# pw : 1234
+
+# 로그인
+class Admin:
+    def __init__(self):
+        user_Check = True
+        while (user_Check):
+            print("ID :")
+            user_ID = input()
+            print("PW :")
+            user_PW = input()
+
+
+
+            if (user_ID == "dong") & (user_PW == "1234"):
+                print(user_ID, user_PW)
+                user_Check = False
+            else:
+                print("wrong info")
+                print("")
+#계산
 class Money:
     pay=1000
     payed=100
@@ -8,10 +30,11 @@ class Money:
         Money.payed=ppayed
     def setChange(self,cchange):
         Money.change=cchange
-
+#메뉴
 class Menu:
     tf=True
     def __init__(self): #menu 생성자(Constructor)
+
         while(Menu.tf):
             print("what you wanna do")
             menu = input("1. nu customer  2. items 3. how much 4. over")
@@ -30,28 +53,6 @@ class Menu:
                 Menu.tf=False
         print("")
 
-class Admin:
-
-    def __init__(self):
-        user_Check = True
-        while (user_Check):
-            print("ID :")
-            user_ID = input()
-            print("PW :")
-            user_PW = input()
-
-
-
-            if (user_ID == "dong") & (user_PW == "1234"):
-                print(user_ID, user_PW)
-                user_Check = False
-            else:
-                print("wrong info")
-                print("")
-
-
-# id : dong
-# pw : 1234
 
 if __name__ == '__main__':
     admin=Admin()
