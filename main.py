@@ -42,13 +42,16 @@ class Admin:
 
 
 
-            if (user_ID == "dong5478") & (user_PW == "ehddnr0428"):
+            if (user_ID == "dong") & (user_PW == "1234"):
                 print(user_ID, user_PW)
                 user_Check = False
             else:
                 print("wrong info")
                 print("")
 
+
+# id : dong
+# pw : 1234
 
 if __name__ == '__main__':
     admin=Admin()
