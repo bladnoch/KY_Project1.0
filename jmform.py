@@ -17,12 +17,10 @@ def excel():
         if (ct==1):
             return(ws['A1'].value,ws['B1'].value,ws['C1'].value,ws['D1'].value,ws['E1'].value,ws['F1'].value,ws['G1'].value)
         if (ct==2):
-            return(ws['A2'].value,ws['B2'].value,ws['C2'].value,ws['D2'].value,ws['E2'].value,ws['F2'].value,touchG())
+            return(ws['A2'].value,ws['B2'].value,ws['C2'].value,ws['D2'].value,ws['E2'].value,ws['F2'].value,ws['G1'].value)
         else:
             loop=False
-def touchG():
-    wb = openpyxl.load_workbook(home)
-    ws = wb['Sheet1']
+
 
     # return 0
     # if (len(..ws['F2'].value)>=0):
