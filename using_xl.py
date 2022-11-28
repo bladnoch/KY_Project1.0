@@ -2,24 +2,29 @@ import openpyxl
 
 # rows=위아래
 # column=양옆
+
 #주소 변수에 저장
 home="/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx"
+
 # 엑셀 불러오기
 wb= openpyxl.load_workbook(home)
 
 # 엑셀 시트 선택
 ws=wb['Sheet1']
 
-
+#셀 값 불러오는 법 1
 print(ws.cell(row=3, column=3).value)
-# print(ws['A1'].value)
+
+#셀 값 불러오는 법 2
+print(ws['A1'].value)
+
 #데이터 수정하기
 
 #row 기준으로 출력
-# for rows in ws.iter_rows():
-#     for cell in rows:
-#         print(cell.value, end="\t\t\t")
-#     print("")
+for rows in ws.iter_rows():
+    for cell in rows:
+        print(cell.value, end="\t\t\t")
+    print("")
 
 col=[]
 row=[]
