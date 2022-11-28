@@ -10,6 +10,12 @@ ws=wb['Sheet1']
 
 print(ws['A1'].value)
 #데이터 수정하기
+test="F"
+test2=1
+for i in range (40):
+    test2=i
+    test3=test+str(test2)
+ws[test3]
 # ws['A3']= "X"
 # ws['B3']= "XXXXXXX"
 # ws['C3']="테스트 숴정"
