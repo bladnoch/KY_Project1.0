@@ -4,38 +4,53 @@ import openpyxl
 
 #from datetime improt datetime
 
-def myFunc():
-    messagebox.showinfo("messagebox")
-
 #def time():
 
-def excel():
+def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
+    messagebox.showinfo("messagebox")
+
+def excel(): #리스트에 한줄로 insert
+    wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
+    ws = wb['Sheet1']
+
+    one_line = "" #이 변수에 한줄 저장
+    for k in range(1, 8):
+        if (str(ws.cell(row=ct, column=k).value)=="None"): #G의 함수를 None -> 0으로 받기
+            one_line+="0"
+        else:
+           one_line += str(ws.cell(row=ct, column=k).value)+'  '
+    return one_line
+
+def in_list(): #2차원 리스트에 입력
     wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
-    loop=True
-    while (loop):
-        if (ct==1):
-            return(ws['A1'].value,ws['B1'].value,ws['C1'].value,ws['D1'].value,ws['E1'].value,ws['F1'].value,ws['G1'].value)
-        if (ct==2):
-            return(ws['A2'].value,ws['B2'].value,ws['C2'].value,ws['D2'].value,ws['E2'].value,ws['F2'].value,ws['G1'].value)
-        else:
-            loop=False
 
+    for i in range(1, 41):
+        for j in range(1, 8):
+            row.append(ws.cell(row=i, column=j).value)
+        col.append(row);
+        row = []
 
-    # return 0
-    # if (len(..ws['F2'].value)>=0):
-    #     return 0
-    # else:
-    #     return ws['E2'].value*ws['F2'].value
+    #저장된 2차원 리스트를 볼 수 있음
+    # for i in range(40):
+    #     for j in range(7):
+    #         print(col[i][j], end="/t")
+    #     print("")
 
 def close():
     win.quit()
     win.destroy()
 
+#########################   global variable   ##########################
 
-home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx"
-ct=1
-count=2
+home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
+
+#초기 excel 파일용 전역변수
+row=[] #2차원 리스트에 값 저장할 때 사용
+col=[] #2차원 리스트에 값 저장할 때 사용
+ct=1 #row 카운트 할때 사용
+i=0 #리스트 인서트할 때 for에 사용
+one_line="" #한줄로 받을 때 사용
 
 #Tkinter 윈도우 화면
 win = Tk() # 창 생성
@@ -112,7 +127,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
 
 #버튼 정의
-재출력 = Button(win, text = "재출력",command=myFunc)
+재출력 = Button(win, text = "재출력",command=myFunc) #DK command로 버튼 클릭시 def myDunc() 실행
 재출력.config(width=10,height=2)
 #btn.config(command=ID_a)
 현금수납 = Button(win, text = "현금수납")
@@ -126,11 +141,13 @@ ID.config(width=10,relief="solid",borderwidth=2)
 Set = Button(win, text = "기본 Set")
 Set.config(width=10,height=3)
 
+in_list
+
 리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30,)
 리스트.yview()
-# 리스트.insert(0, "1번")
-# 리스트.insert(1, "2번") #반복문으로 딕셔너리, 튜플, 리스트 사용 가
-for i in range(count):
+
+#DK 엑셀 저장된 2차원 리스트 불러오기
+for i in range(40):
     리스트.insert(i,excel())
     ct+=1
 
@@ -183,7 +200,8 @@ win.mainloop() # 창 실행
 
 
 
-# 원본 파일
+############################################ 원본 파일 ############################################
+
 # from tkinter import * # tkinter의 모든 함수 가져오기
 # import openpyxl
 # #from datetime improt datetime
