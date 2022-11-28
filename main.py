@@ -12,7 +12,6 @@ class Admin:
             user_PW = input()
 
 
-
             if (user_ID == "dong") & (user_PW == "1234"):
                 print(user_ID, user_PW)
                 user_Check = False
