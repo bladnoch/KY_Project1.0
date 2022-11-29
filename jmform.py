@@ -9,19 +9,19 @@ import openpyxl
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     messagebox.showinfo("messagebox")
 
-def excel(): #리스트에 한줄로 insert
+def excel(): #DK 리스트에 한줄로 insert
     wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
     ws = wb['Sheet1']
 
-    one_line = "" #이 변수에 한줄 저장
+    one_line = "" #DK 이 변수에 한줄 저장
     for k in range(1, 8):
-        if (str(ws.cell(row=ct, column=k).value)=="None"): #G의 함수를 None -> 0으로 받기
+        if (str(ws.cell(row=ct, column=k).value)=="None"): #DK G의 함수를 None -> 0으로 받기
             one_line+="0"
         else:
            one_line += str(ws.cell(row=ct, column=k).value)+'  '
     return one_line
 
-def in_list(): #2차원 리스트에 입력
+def in_list(): #DK 2차원 리스트에 입력
     wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
 
@@ -31,7 +31,7 @@ def in_list(): #2차원 리스트에 입력
         col.append(row);
         row = []
 
-    #저장된 2차원 리스트를 볼 수 있음
+    #DK 저장된 2차원 리스트를 볼 수 있음
     # for i in range(40):
     #     for j in range(7):
     #         print(col[i][j], end="/t")
@@ -45,7 +45,7 @@ def close():
 
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
 
-#초기 excel 파일용 전역변수
+#DK 초기 excel 파일용 전역변수
 row=[] #2차원 리스트에 값 저장할 때 사용
 col=[] #2차원 리스트에 값 저장할 때 사용
 ct=1 #row 카운트 할때 사용
