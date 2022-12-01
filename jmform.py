@@ -9,20 +9,24 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 #def time():
 
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
-    messagebox.showinfo("버튼 클릭","ID : "+ID.get()+"\n고인명 : "+고인명.get()+"\n 상주명 : "+상주명.get())
-
+    # messagebox.showinfo("버튼 클릭","ID : "+ID.get()+"\n고인명 : "+고인명.get()+"\n 상주명 : "+상주명.get())
+    # messagebox.showinfo("리스트 요소 테스트용",oglist[0][0]+" "+oglist[0][1]+" "+oglist[0][2]+oglist[0][3]+" "+oglist[0][4]+" "+oglist[0][5])
+    messagebox.showinfo("sdf",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
 
 
 def show_excel(): #DK 리스트에 한줄로 insert
+
     wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
     ws = wb['Sheet1']
+
 
     one_line = "" #DK 이 변수에 한줄 저장
     for k in range(1, 8):
         if (str(ws.cell(row=ct, column=k).value)=="None"): #DK G의 함수를 None -> 0으로 받기
             one_line+="0"
         else:
-           one_line += str(ws.cell(row=ct, column=k).value)+'  '
+            one_line += str(ws.cell(row=ct, column=k).value)+'  '
+
     return one_line
 
 
@@ -31,54 +35,13 @@ def show_excel(): #DK 리스트에 한줄로 insert
 def in_list():
     wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
-
+    row=[]
     for i in range(1, 41):
         for j in range(1, 8):
             row.append(ws.cell(row=i, column=j).value)
-        col.append(row);
+        oglist.append(row)
         row = []
 
-#DK add row(not yet)
-    #DK 저장된 2차원 리스트를 볼 수 있음
-    # for i in range(40):
-    #     for j in range(7):
-    #         print(col[i][j], end="/t")
-    #     print("")
-
-    # def gotable():
-    #     # wb = openpyxl.load_workbook(home)
-    #     # ws = wb['Sheet1']
-    #
-    #     wb = Workbook()
-    #     ws = wb.active
-    #
-    #     data = [
-    #         ['Apples', 10000, 5000, 8000, 6000],
-    #         ['Pears',   2000, 3000, 4000, 5000],
-    #         ['Bananas', 6000, 6000, 6500, 6000],
-    #         ['Oranges',  500,  300,  200,  700],
-    #     ]
-    #     data=col
-    #
-    #
-    #     # add column headings. NB. these must be strings
-    #     ws.append(["Fruit", "2011", "2012", "2013", "2014"])
-    #     for row in data:
-    #         ws.append(row)
-    #
-    #     tab = Table(displayName="Table1", ref="A1:E5")
-    #
-    #     # Add a default style with striped rows and banded columns
-    #     style = TableStyleInfo(name="TableStyleMedium9", showFirstColumn=False,
-    #                            showLastColumn=False, showRowStripes=True, showColumnStripes=True)
-    #     tab.tableStyleInfo = style
-    #
-    #     '''
-    #     Table must be added using ws.add_table() method to avoid duplicate names.
-    #     Using this method ensures table name is unque through out defined names and all other table name.
-    #     '''
-    #     ws.add_table(tab)
-    #     wb.save("copyog.xlsx")
 
 def close():
     win.quit()
@@ -89,11 +52,14 @@ def close():
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
 
 #DK 초기 excel 파일용 전역변수
-row=[] #2차원 리스트에 값 저장할 때 사용
-col=[] #2차원 리스트에 값 저장할 때 사용
+
+
+oglist=[]#2차원 리스트에 값 저장할 때 사용
 ct=1 #row 카운트 할때 사용
-i=0 #리스트 인서트할 때 for에 사용
+# i=0 #리스트 인서트할 때 for에 사용
 one_line="" #한줄로 받을 때 사용
+a=0
+
 
 #Tkinter 윈도우 화면
 win = Tk() # 창 생성
@@ -170,7 +136,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
 
 #버튼 정의
-재출력 = Button(win, text = "재출력", command=myFunc) #DK command로 버튼 클릭시 def myDunc() 실행
+재출력 = Button(win, text = "재출력", command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
 재출력.config(width=10,height=2)
 #btn.config(command=ID_a)
 현금수납 = Button(win, text = "현금수납")
@@ -184,7 +150,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 Set = Button(win, text = "기본 Set")
 Set.config(width=10,height=3)
 
-in_list
+
 
 리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30,)
 리스트.yview()
@@ -195,7 +161,7 @@ in_list
 for i in range(40):
     리스트.insert(i,show_excel())
     ct+=1
-
+in_list()
 #########################   place  ##########################
 
 #레이블 위치

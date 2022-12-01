@@ -20,11 +20,16 @@ print(ws['A1'].value)
 
 #데이터 수정하기
 
+oi=0
+wi=0
 #row 기준으로 출력
 for rows in ws.iter_rows():
     for cell in rows:
         print(cell.value, end="\t\t\t")
+        wi+=1
     print("")
+    oi+=1
+print(wi,oi)
 
 col=[]
 row=[]
