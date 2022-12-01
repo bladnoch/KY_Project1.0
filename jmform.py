@@ -24,10 +24,6 @@ def defaultset():
     빈소기간2.insert(0,"단위")
     안치기간1.insert(0,"수량")
     안치기간2.insert(0,"금액")
-
-
-
-
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     # messagebox.showinfo("oglist 0-4 : ",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
     # messagebox.showinfo("ws의 rows 길이 : ", get_rows())
@@ -43,6 +39,7 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     pws['B1'] = 고인명.get()
     pws['C1'] = 상주명.get()
     pws['D1'] = 빈소.get()
+    room=빈소.get()
 
 
     # sheet 2에 들어갈 정보
@@ -63,9 +60,20 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
 
     #이름이 같으면 덮어씀
     #위치 자체를 스트링으로 받고 더해서 저장하는 방법으로 호실기준 바꿀 수 있다.
+    if (room=="1"):#빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
+    elif(room=="2"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_two.xlsx')
+    elif (room == "3"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_three.xlsx')
+    elif (room == "4"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_four.xlsx')
+    elif (room == "5"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_five.xlsx')
+    elif (room == "6"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_six.xlsx')
 
-    nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/personal.xlsx')
-
+    리스트.delete(0, get_rows())
 
     one_line = ""
     for i in range(1, (get_rows() + 1)):
@@ -115,13 +123,6 @@ wb = openpyxl.load_workbook(home) #함수 그대로
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
 swh=True #첫 목록 여러번 나오지 않게 하려고 만들었는데 필요 없을 수 있음 -> defaultset()
 
-
-one=""
-two=""
-three=""
-four=""
-five=""
-six=""
 
 #Tkinter 윈도우 화면
 win = Tk() # 창 생성
