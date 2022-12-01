@@ -9,11 +9,37 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 #def time():
 
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
-    # messagebox.showinfo("버튼 클릭","ID : "+ID.get()+"\n고인명 : "+고인명.get()+"\n 상주명 : "+상주명.get())
-    # messagebox.showinfo("리스트 요소 테스트용",oglist[0][0]+" "+oglist[0][1]+" "+oglist[0][2]+oglist[0][3]+" "+oglist[0][4]+" "+oglist[0][5])
-    messagebox.showinfo("oglist 0-4 : ",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
-    messagebox.showinfo("ws의 rows 길이 : ", get_rows())
-# rows 길이 필요할 때 사용
+    # messagebox.showinfo("oglist 0-4 : ",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
+    # messagebox.showinfo("ws의 rows 길이 : ", get_rows())
+
+    nwb = openpyxl.Workbook() #엑셀 생성
+    pws = nwb.create_sheet("personal_info") #+sheet 이름
+    iws = nwb.create_sheet("items") #+sheet 이름 2
+
+
+    # sheet 1에 들어갈 정보
+    # A:ID B:고인명 C:상주명 D:빈소
+    pws['A1'] =ID.get()
+    pws['B1'] = 고인명.get()
+    pws['C1'] = 상주명.get()
+    pws['D1'] = 빈소.get()
+
+
+    # sheet 2에 들어갈 정보
+    #A:번호(용도 모름) B:물품코드 C:뭂품명 D:단위 E:단가 F:수량 G:금액
+    iws['A1'] = "번호"
+    iws['B1'] = "물품코드"  # 물품명 string
+    iws['C1'] = '물품명'
+    iws['D1'] = '단위'
+    iws['E1'] = '단가'
+    iws['F1'] = '수량'
+    iws['G1'] = '금액'
+
+    # for i in range()
+
+    #이름이 같으면 덮어씀
+    #위치 자체를 스트링으로 받고 더해서 저장하는 방법으로 호실기준 바꿀 수 있다.
+    nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/personal.xlsx')
 def get_rows():
     wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
@@ -22,7 +48,15 @@ def get_rows():
     for rows in ws.iter_rows():
         count+=1
     return count
+def get_cells():
+    wb = openpyxl.load_workbook(home)
+    ws = wb['Sheet1']
+    count=0
 
+    for rows in ws.iter_rows():
+        for cell in rows:
+            count+=1
+    return count
 def show_excel(): #DK 리스트에 한줄로 insert
 
     wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
@@ -37,15 +71,13 @@ def show_excel(): #DK 리스트에 한줄로 insert
             one_line += str(ws.cell(row=ct, column=k).value)+'  '
 
     return one_line
-
-
 #DK og 목록을 참조한 2차원 리스트
 #DK 2차원 리스트에 저장
 def in_list():
     wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
     row=[]
-    for i in range(1, 41):
+    for i in range(1,(get_rows()+1)):
         for j in range(1, 8):
             row.append(ws.cell(row=i, column=j).value)
         oglist.append(row)
@@ -62,8 +94,6 @@ home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xl
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
 ct=1    #row 카운트 할때 사용 ->show_excel(), main
 
-# one_line="" #한줄로 받을 때 사용
-# a=0
 
 
 #Tkinter 윈도우 화면
@@ -141,8 +171,8 @@ ID.config(width=10,relief="solid",borderwidth=2)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
 
 #버튼 정의
-재출력 = Button(win, text = "재출력", command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
-재출력.config(width=10,height=2)
+추가 = Button(win, text = "추가", command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
+추가.config(width=10,height=2)
 #btn.config(command=ID_a)
 현금수납 = Button(win, text = "현금수납")
 현금수납.config(width=10,height=3)
@@ -198,7 +228,7 @@ ID.place(x=110,y=10)
 거스름돈.place(x=720,y=110)
 
 #버튼 위치
-재출력.place(x= 500, y=100)
+추가.place(x= 500, y=100)
 현금수납.place(x=900, y=10)
 닫기.place(x=900, y=70)
 식당판매.place(x=700, y=150)
