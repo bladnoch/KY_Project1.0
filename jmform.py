@@ -66,6 +66,18 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
 
     nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/personal.xlsx')
 
+
+    one_line = ""
+    for i in range(1, (get_rows() + 1)):
+        for j in range(1, 8):
+            if (str(iws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
+                one_line += "0"
+            else:
+                one_line += str(iws.cell(row=i, column=j).value) + '\t'
+
+        리스트.insert((i - 1), one_line)
+        one_line = ""
+
 def get_rows():
     ws = wb['Sheet1']
     count=0
@@ -201,7 +213,6 @@ ID.config(width=10,relief="solid",borderwidth=2)
 매점판매.config(width=10,height=3)
 Set = Button(win, text = "기본 Set")
 Set.config(width=10,height=3)
-
 
 
 리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30)
