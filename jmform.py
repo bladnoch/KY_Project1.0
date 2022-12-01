@@ -7,6 +7,20 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 #from datetime improt datetime
 
 #def time():
+def defaultset():
+    wb = openpyxl.load_workbook(home, data_only=True)  # 값만 받기
+    ws = wb['Sheet1']
+    one_line=""
+    for i in range(1,(get_rows()+1)):
+        for k in range(1, 8):
+            if (str(ws.cell(row=i, column=k).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
+                one_line += "0"
+            else:
+                one_line += str(ws.cell(row=i, column=k).value) + '  '
+
+        리스트.insert((i-1), one_line)
+        one_line=""
+
 
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     # messagebox.showinfo("oglist 0-4 : ",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
@@ -62,7 +76,6 @@ def show_excel(): #DK 리스트에 한줄로 insert
     wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
     ws = wb['Sheet1']
 
-
     one_line = "" #DK 이 변수에 한줄 저장
 
     for k in range(1, 8):
@@ -94,6 +107,7 @@ def close():
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
 ct=1    #row 카운트 할때 사용 ->show_excel(), main
+switch=True
 
 
 
@@ -105,6 +119,8 @@ win.option_add("*Font", "맑은고딕 11") # 전체 폰트
 #win.resizable(False, False) #윈도우 사이즈 조절 불가
 
 #########################   excel   ##########################
+
+
 
 #########################    menu   ##########################
 
@@ -194,9 +210,13 @@ Set.config(width=10,height=3)
 # 리스트.gotable()
 
 #DK 엑셀 저장된 2차원 리스트 불러오기
-for i in range(get_rows()):
-    리스트.insert(i,show_excel())
-    ct+=1
+
+# for i in range(get_rows()):
+#     리스트.insert(i,show_excel())
+#     ct+=1
+if (switch==True):
+    defaultset()
+    switch==False
 in_list()
 #########################   place  ##########################
 
