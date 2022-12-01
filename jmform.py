@@ -9,7 +9,8 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 #def time():
 
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
-    messagebox.showinfo(고인명.get())
+    messagebox.showinfo("버튼 클릭","ID : "+ID.get()+"\n고인명 : "+고인명.get()+"\n 상주명 : "+상주명.get())
+
 
 
 def show_excel(): #DK 리스트에 한줄로 insert
@@ -169,7 +170,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
 
 #버튼 정의
-재출력 = Button(win, text = "재출력",command=myFunc) #DK command로 버튼 클릭시 def myDunc() 실행
+재출력 = Button(win, text = "재출력", command=myFunc) #DK command로 버튼 클릭시 def myDunc() 실행
 재출력.config(width=10,height=2)
 #btn.config(command=ID_a)
 현금수납 = Button(win, text = "현금수납")
