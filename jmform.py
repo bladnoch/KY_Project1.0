@@ -7,7 +7,7 @@ import openpyxl
 #def time():
 
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
-    messagebox.showinfo("messagebox")
+    messagebox.showinfo(고인명)
 
 def excel(): #DK 리스트에 한줄로 insert
     wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
