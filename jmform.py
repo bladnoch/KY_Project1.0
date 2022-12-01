@@ -64,6 +64,7 @@ def show_excel(): #DK 리스트에 한줄로 insert
 
 
     one_line = "" #DK 이 변수에 한줄 저장
+
     for k in range(1, 8):
         if (str(ws.cell(row=ct, column=k).value)=="None"): #DK G의 함수를 None -> 0으로 받기
             one_line+="0"
@@ -171,8 +172,8 @@ ID.config(width=10,relief="solid",borderwidth=2)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
 
 #버튼 정의
-추가 = Button(win, text = "추가", command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
-추가.config(width=10,height=2)
+저장 = Button(win, text = "저장", command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
+저장.config(width=10,height=2)
 #btn.config(command=ID_a)
 현금수납 = Button(win, text = "현금수납")
 현금수납.config(width=10,height=3)
@@ -228,7 +229,7 @@ ID.place(x=110,y=10)
 거스름돈.place(x=720,y=110)
 
 #버튼 위치
-추가.place(x= 500, y=100)
+저장.place(x= 500, y=100)
 현금수납.place(x=900, y=10)
 닫기.place(x=900, y=70)
 식당판매.place(x=700, y=150)
