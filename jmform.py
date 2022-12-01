@@ -9,9 +9,10 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 #def time():
 
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
-    messagebox.showinfo(고인명)
+    messagebox.showinfo(고인명.get())
 
-def excel(): #DK 리스트에 한줄로 insert
+
+def show_excel(): #DK 리스트에 한줄로 insert
     wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
     ws = wb['Sheet1']
 
@@ -23,7 +24,10 @@ def excel(): #DK 리스트에 한줄로 insert
            one_line += str(ws.cell(row=ct, column=k).value)+'  '
     return one_line
 
-def in_list(): #DK 2차원 리스트에 입력
+
+#DK og 목록을 참조한 2차원 리스트
+#DK 2차원 리스트에 저장
+def in_list():
     wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
 
@@ -33,15 +37,47 @@ def in_list(): #DK 2차원 리스트에 입력
         col.append(row);
         row = []
 
+#DK add row(not yet)
     #DK 저장된 2차원 리스트를 볼 수 있음
     # for i in range(40):
     #     for j in range(7):
     #         print(col[i][j], end="/t")
     #     print("")
 
-# def gotable():
-#     wb = openpyxl.load_workbook(home, data_only=True)  # 값만 받기
-#     ws = wb['Sheet1']
+    # def gotable():
+    #     # wb = openpyxl.load_workbook(home)
+    #     # ws = wb['Sheet1']
+    #
+    #     wb = Workbook()
+    #     ws = wb.active
+    #
+    #     data = [
+    #         ['Apples', 10000, 5000, 8000, 6000],
+    #         ['Pears',   2000, 3000, 4000, 5000],
+    #         ['Bananas', 6000, 6000, 6500, 6000],
+    #         ['Oranges',  500,  300,  200,  700],
+    #     ]
+    #     data=col
+    #
+    #
+    #     # add column headings. NB. these must be strings
+    #     ws.append(["Fruit", "2011", "2012", "2013", "2014"])
+    #     for row in data:
+    #         ws.append(row)
+    #
+    #     tab = Table(displayName="Table1", ref="A1:E5")
+    #
+    #     # Add a default style with striped rows and banded columns
+    #     style = TableStyleInfo(name="TableStyleMedium9", showFirstColumn=False,
+    #                            showLastColumn=False, showRowStripes=True, showColumnStripes=True)
+    #     tab.tableStyleInfo = style
+    #
+    #     '''
+    #     Table must be added using ws.add_table() method to avoid duplicate names.
+    #     Using this method ensures table name is unque through out defined names and all other table name.
+    #     '''
+    #     ws.add_table(tab)
+    #     wb.save("copyog.xlsx")
 
 def close():
     win.quit()
@@ -152,11 +188,11 @@ in_list
 리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30,)
 리스트.yview()
 
-리스트.gotable()
+# 리스트.gotable()
 
 #DK 엑셀 저장된 2차원 리스트 불러오기
 for i in range(40):
-    리스트.insert(i,excel())
+    리스트.insert(i,show_excel())
     ct+=1
 
 #########################   place  ##########################
