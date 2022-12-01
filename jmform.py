@@ -1,6 +1,8 @@
 from tkinter import * # tkinter의 모든 함수 가져오기
 from tkinter import messagebox
 import openpyxl
+from openpyxl.worksheet.table import Table, TableStyleInfo
+
 
 #from datetime improt datetime
 
@@ -36,6 +38,10 @@ def in_list(): #DK 2차원 리스트에 입력
     #     for j in range(7):
     #         print(col[i][j], end="/t")
     #     print("")
+
+# def gotable():
+#     wb = openpyxl.load_workbook(home, data_only=True)  # 값만 받기
+#     ws = wb['Sheet1']
 
 def close():
     win.quit()
@@ -145,6 +151,8 @@ in_list
 
 리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30,)
 리스트.yview()
+
+리스트.gotable()
 
 #DK 엑셀 저장된 2차원 리스트 불러오기
 for i in range(40):
