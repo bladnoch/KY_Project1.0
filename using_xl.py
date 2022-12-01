@@ -30,7 +30,7 @@ for rows in ws.iter_rows():
     print("")
     oi+=1
 print(wi,oi)
-
+print(rows)
 col=[]
 row=[]
 

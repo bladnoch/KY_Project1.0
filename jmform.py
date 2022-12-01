@@ -11,8 +11,17 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     # messagebox.showinfo("버튼 클릭","ID : "+ID.get()+"\n고인명 : "+고인명.get()+"\n 상주명 : "+상주명.get())
     # messagebox.showinfo("리스트 요소 테스트용",oglist[0][0]+" "+oglist[0][1]+" "+oglist[0][2]+oglist[0][3]+" "+oglist[0][4]+" "+oglist[0][5])
-    messagebox.showinfo("sdf",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
+    messagebox.showinfo("oglist 0-4 : ",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
+    messagebox.showinfo("ws의 rows 길이 : ", get_rows())
+# rows 길이 필요할 때 사용
+def get_rows():
+    wb = openpyxl.load_workbook(home)
+    ws = wb['Sheet1']
+    count=0
 
+    for rows in ws.iter_rows():
+        count+=1
+    return count
 
 def show_excel(): #DK 리스트에 한줄로 insert
 
@@ -50,15 +59,11 @@ def close():
 #########################   global variable   ##########################
 
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
+oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
+ct=1    #row 카운트 할때 사용 ->show_excel(), main
 
-#DK 초기 excel 파일용 전역변수
-
-
-oglist=[]#2차원 리스트에 값 저장할 때 사용
-ct=1 #row 카운트 할때 사용
-# i=0 #리스트 인서트할 때 for에 사용
-one_line="" #한줄로 받을 때 사용
-a=0
+# one_line="" #한줄로 받을 때 사용
+# a=0
 
 
 #Tkinter 윈도우 화면
@@ -158,7 +163,7 @@ Set.config(width=10,height=3)
 # 리스트.gotable()
 
 #DK 엑셀 저장된 2차원 리스트 불러오기
-for i in range(40):
+for i in range(get_rows()):
     리스트.insert(i,show_excel())
     ct+=1
 in_list()
