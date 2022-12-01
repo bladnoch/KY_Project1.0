@@ -8,9 +8,10 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 
 #def time():
 def defaultset():
-    ws = wb_data['Sheet1'] # 값만 받기
+    ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
     one_line=""
-    for i in range(1,(get_rows()+1)):
+
+    for i in range(1,(get_rows()+1)): #원본 파일을 리스트 박스에 출력
         for j in range(1, 8):
             if (str(ws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
                 one_line += "0"
@@ -20,20 +21,19 @@ def defaultset():
         리스트.insert((i-1), one_line)
         one_line=""
 
+    #임시로 입력을 받기 위해 수정한 텍스트 박스
     빈소기간1.insert(0,"물품명")
     빈소기간2.insert(0,"단위")
     안치기간1.insert(0,"수량")
     안치기간2.insert(0,"금액")
-def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
-    # messagebox.showinfo("oglist 0-4 : ",(oglist[0][0], oglist[0][1],oglist[0][2],oglist[0][3],oglist[0][4]))
-    # messagebox.showinfo("ws의 rows 길이 : ", get_rows())
+def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따라 사용되는 파일이 다름 -> 원본 시트의 목록 삭제 -> 새로운 시트의 목록 출력
 
     nwb = openpyxl.Workbook() #엑셀 생성
     pws = nwb.create_sheet("personal_info") #+sheet 이름
     iws = nwb.create_sheet("items") #+sheet 이름 2
 
 
-    # sheet 1에 들어갈 정보
+    # sheet 1(personal_info)에 들어갈 정보
     # A:ID B:고인명 C:상주명 D:빈소
     pws['A1'] = ID.get()
     pws['B1'] = 고인명.get()
@@ -42,7 +42,7 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     room=빈소.get()
 
 
-    # sheet 2에 들어갈 정보
+    # sheet 2(items)에 들어갈 정보
     #A:번호(용도 모름) B:물품코드 C:뭂품명 D:단위 E:단가 F:수량 G:금액
     iws['A1'] = "번호"
     iws['B1'] = "물품코드"  # 물품명 string
@@ -52,15 +52,14 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     iws['F1'] = '수량'
     iws['G1'] = '금액'
 
-    #og파일 복사
-
+    #원본 파일을 새로운 파일에 복사
     for i in range(2,(get_rows()+1)):
         for j in range(1, 8):
             iws.cell(row=i,column=j).value=oglist[i-1][j-1]
 
     #이름이 같으면 덮어씀
-    #위치 자체를 스트링으로 받고 더해서 저장하는 방법으로 호실기준 바꿀 수 있다.
-    if (room=="1"):#빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
+    # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
+    if (room=="1"):
         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
     elif(room=="2"):
         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_two.xlsx')
@@ -73,9 +72,11 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     elif (room == "6"):
         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_six.xlsx')
 
-    리스트.delete(0, get_rows())
+    리스트.delete(0, get_rows()) #출력된 원본 시트 목록 제삭
+
 
     one_line = ""
+    # 원본파일에서 복사된 새 시트의 목록들 출력
     for i in range(1, (get_rows() + 1)):
         for j in range(1, 8):
             if (str(iws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
@@ -85,32 +86,30 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
 
         리스트.insert((i - 1), one_line)
         one_line = ""
-
-def get_rows():
-    ws = wb['Sheet1']
+def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
+    ws = wb['Sheet1'] #원본 시트 참조
     count=0
 
     for rows in ws.iter_rows():
         count+=1
     return count
-def get_cells():
-    ws = wb['Sheet1']
+def get_cells(): #원본 시트의 총 셀 수를 가진다.
+    ws = wb['Sheet1'] #원본 시트 참조
     count=0
 
     for rows in ws.iter_rows():
         for cell in rows:
             count+=1
     return count
-def in_list():
+def in_list(): #2차원 리스트에 저장 --oglist(원본 손상 없이 그대로 유지)
     ws = wb['Sheet1']
     row=[]
+    #원본 시트 사용
     for i in range(1,(get_rows()+1)):
         for j in range(1, 8):
             row.append(ws.cell(row=i, column=j).value)
         oglist.append(row)
         row = []
-
-
 def close():
     win.quit()
     win.destroy()

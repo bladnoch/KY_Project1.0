@@ -23,7 +23,7 @@ iws['A1']=2
 iws['B1']="0001" #물품명 string
 iws['C1']='고무장갑'
 
-nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/personal.xlsx')
+nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
 
 # test="A"
 # test2=1
@@ -50,4 +50,4 @@ nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/perso
 
 #엑셀 저장
 # !엑셀 이름을 어떻게 줄것인지 생각해야함 ->int변수나 id를 이름으로 주는 방법
-nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/personal.xlsx')
+nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
