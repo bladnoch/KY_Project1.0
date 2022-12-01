@@ -8,18 +8,24 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 
 #def time():
 def defaultset():
-    wb = openpyxl.load_workbook(home, data_only=True)  # 값만 받기
-    ws = wb['Sheet1']
+    ws = wb_data['Sheet1'] # 값만 받기
     one_line=""
     for i in range(1,(get_rows()+1)):
-        for k in range(1, 8):
-            if (str(ws.cell(row=i, column=k).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
+        for j in range(1, 8):
+            if (str(ws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
                 one_line += "0"
             else:
-                one_line += str(ws.cell(row=i, column=k).value) + '  '
+                one_line += str(ws.cell(row=i, column=j).value) + '  '
 
         리스트.insert((i-1), one_line)
         one_line=""
+
+    빈소기간1.insert(0,"물품명")
+    빈소기간2.insert(0,"단위")
+    안치기간1.insert(0,"수량")
+    안치기간2.insert(0,"금액")
+
+
 
 
 def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
@@ -33,7 +39,7 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
 
     # sheet 1에 들어갈 정보
     # A:ID B:고인명 C:상주명 D:빈소
-    pws['A1'] =ID.get()
+    pws['A1'] = ID.get()
     pws['B1'] = 고인명.get()
     pws['C1'] = 상주명.get()
     pws['D1'] = 빈소.get()
@@ -49,13 +55,18 @@ def myFunc(): #DK 테스트용 재출력 버튼에 연결되어 있음
     iws['F1'] = '수량'
     iws['G1'] = '금액'
 
-    # for i in range()
+    #og파일 복사
+
+    for i in range(2,(get_rows()+1)):
+        for j in range(1, 8):
+            iws.cell(row=i,column=j).value=oglist[i-1][j-1]
 
     #이름이 같으면 덮어씀
     #위치 자체를 스트링으로 받고 더해서 저장하는 방법으로 호실기준 바꿀 수 있다.
+
     nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/personal.xlsx')
+
 def get_rows():
-    wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
     count=0
 
@@ -63,7 +74,6 @@ def get_rows():
         count+=1
     return count
 def get_cells():
-    wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
     count=0
 
@@ -71,24 +81,7 @@ def get_cells():
         for cell in rows:
             count+=1
     return count
-def show_excel(): #DK 리스트에 한줄로 insert
-
-    wb = openpyxl.load_workbook(home, data_only=True) #값만 받기
-    ws = wb['Sheet1']
-
-    one_line = "" #DK 이 변수에 한줄 저장
-
-    for k in range(1, 8):
-        if (str(ws.cell(row=ct, column=k).value)=="None"): #DK G의 함수를 None -> 0으로 받기
-            one_line+="0"
-        else:
-            one_line += str(ws.cell(row=ct, column=k).value)+'  '
-
-    return one_line
-#DK og 목록을 참조한 2차원 리스트
-#DK 2차원 리스트에 저장
 def in_list():
-    wb = openpyxl.load_workbook(home)
     ws = wb['Sheet1']
     row=[]
     for i in range(1,(get_rows()+1)):
@@ -105,11 +98,18 @@ def close():
 #########################   global variable   ##########################
 
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
+wb_data = openpyxl.load_workbook(home, data_only=True) #값으로
+wb = openpyxl.load_workbook(home) #함수 그대로
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
-ct=1    #row 카운트 할때 사용 ->show_excel(), main
-switch=True
+swh=True #첫 목록 여러번 나오지 않게 하려고 만들었는데 필요 없을 수 있음 -> defaultset()
 
 
+one=""
+two=""
+three=""
+four=""
+five=""
+six=""
 
 #Tkinter 윈도우 화면
 win = Tk() # 창 생성
@@ -147,10 +147,10 @@ ID_lab.config(text = "ID", width=10, relief="solid")
 상주명_lab.config(text = "상주명",width=10, relief="solid")
 빈소_lab = Label(win)
 빈소_lab.config(text = "빈소", width=10, relief="solid")
-빈소기간_lab = Label(win)
-빈소기간_lab.config(text = "빈소기간", width=10, relief="solid")
-안치기간_lab = Label(win)
-안치기간_lab.config(text = "안치기간", width=10, relief="solid")
+# 빈소기간_lab = Label(win)
+# 빈소기간_lab.config(text = "빈소기간", width=10, relief="solid")
+# 안치기간_lab = Label(win)
+# 안치기간_lab.config(text = "안치기간", width=10, relief="solid")
 물결1_lab = Label(win)
 물결1_lab.config(text = "~", width=10)
 물결2_lab = Label(win)
@@ -173,13 +173,13 @@ ID.config(width=10,relief="solid",borderwidth=2)
 빈소 = Entry(win)
 빈소.config(width=60,relief="solid",borderwidth=2)
 빈소기간1 = Entry(win)
-빈소기간1.config(width=20,relief="solid",borderwidth=2)
+빈소기간1.config(width=10,relief="solid",borderwidth=2)
 안치기간1 = Entry(win)
-안치기간1.config(width=20,relief="solid",borderwidth=2)
+안치기간1.config(width=10,relief="solid",borderwidth=2)
 빈소기간2 = Entry(win)
-빈소기간2.config(width=20,relief="solid",borderwidth=2)
+빈소기간2.config(width=10,relief="solid",borderwidth=2)
 안치기간2 = Entry(win)
-안치기간2.config(width=20,relief="solid",borderwidth=2)
+안치기간2.config(width=10,relief="solid",borderwidth=2)
 수납금액 = Entry(win)
 수납금액.config(width=20,relief="solid",borderwidth=2)
 받은금액 = Entry(win)
@@ -204,20 +204,17 @@ Set.config(width=10,height=3)
 
 
 
-리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30,)
+리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30)
 리스트.yview()
-
-# 리스트.gotable()
 
 #DK 엑셀 저장된 2차원 리스트 불러오기
 
-# for i in range(get_rows()):
-#     리스트.insert(i,show_excel())
-#     ct+=1
-if (switch==True):
+if (swh==True):
     defaultset()
-    switch==False
+    swh==False
 in_list()
+
+
 #########################   place  ##########################
 
 #레이블 위치
@@ -225,8 +222,8 @@ ID_lab.place(x=10,y=10)
 고인명_lab.place(x=210,y=10)
 상주명_lab.place(x=410,y=10)
 빈소_lab.place(x=10,y=50)
-빈소기간_lab.place(x=10,y=90)
-안치기간_lab.place(x=10,y=130)
+# 빈소기간_lab.place(x=10,y=90)
+# 안치기간_lab.place(x=10,y=130)
 물결1_lab.place(x=250,y=90)
 물결2_lab.place(x=250,y=130)
 ###
@@ -239,10 +236,10 @@ ID.place(x=110,y=10)
 고인명.place(x=310,y=10)
 상주명.place(x=510,y=10)
 빈소.place(x=110,y=50)
-빈소기간1.place(x=110,y=90)
-안치기간1.place(x=110,y=130)
-빈소기간2.place(x=310,y=90)
-안치기간2.place(x=310,y=130)
+빈소기간1.place(x=10,y=180)
+안치기간1.place(x=100,y=180)
+빈소기간2.place(x=190,y=180)
+안치기간2.place(x=280,y=180)
 
 수납금액.place(x=720,y=10)
 받은금액.place(x=720,y=60)
