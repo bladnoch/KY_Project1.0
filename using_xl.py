@@ -16,7 +16,7 @@ ws=wb['Sheet1']
 print(ws.cell(row=3, column=3).value)
 
 #셀 값 불러오는 법 2
-print(ws['A1'].value)
+print(ws['A1'].value)4
 
 #데이터 수정하기
 
