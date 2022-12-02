@@ -23,9 +23,9 @@ def defaultset():
 
     #임시로 입력을 받기 위해 수정한 텍스트 박스
     빈소기간1.insert(0,"물품명")
-    빈소기간2.insert(0,"단위")
-    안치기간1.insert(0,"수량")
-    안치기간2.insert(0,"금액")
+    빈소기간2.insert(0,"단가")
+    안치기간1.insert(0,"단위")
+    안치기간2.insert(0,"수량")
 def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따라 사용되는 파일이 다름 -> 원본 시트의 목록 삭제 -> 새로운 시트의 목록 출력
     nwb = openpyxl.Workbook() #엑셀 생성
     pws = nwb.create_sheet("personal_info") #+sheet 이름
@@ -81,10 +81,11 @@ def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따�
             if (str(iws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
                 one_line += "0"
             else:
-                one_line += str(iws.cell(row=i, column=j).value) + '\t'
+                one_line += str(iws.cell(row=i, column=j).value) + '\t\t'
 
         리스트.insert((i - 1), one_line)
         one_line = ""
+
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
     count=0
 
@@ -114,9 +115,10 @@ def close():
 
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
 wb_data = openpyxl.load_workbook(home, data_only=True) #값으로
-ws_data=wb_data['Sheet1']
+ws_data=wb_data['Sheet1'] #사용 시트 지정
+
 wb = openpyxl.load_workbook(home) #함수 그대로
-ws = wb['Sheet1']
+ws = wb['Sheet1'] #사용 시트 지정
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
 swh=True #첫 목록 여러번 나오지 않게 하려고 만들었는데 필요 없을 수 있음 -> defaultset()
 
@@ -213,7 +215,7 @@ Set = Button(win, text = "기본 Set")
 Set.config(width=10,height=3)
 
 
-리스트 = Listbox(win, selectmode = 'extended',width = 122, height = 30)
+리스트 = Listbox(win, selectmode = 'extended',width = 180, height = 30)
 리스트.yview()
 
 #DK 엑셀 저장된 2차원 리스트 불러오기

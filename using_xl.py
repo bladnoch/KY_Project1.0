@@ -13,26 +13,31 @@ wb= openpyxl.load_workbook(home)
 ws=wb['Sheet1']
 
 #셀 값 불러오는 법 1
-print(ws.cell(row=3, column=3).value)
+# print(ws.cell(row=3, column=3).value)
 
 #셀 값 불러오는 법 2
-print(ws['A1'].value)4
+# print(ws['A1'].value)
 
+
+from openpyxl import load_workbook
+
+pivot = ws._pivots[0] # any will do as they share the same cache
+pivot.cache.refreshOnLoad = True
 #데이터 수정하기
 
-oi=0
-wi=0
-#row 기준으로 출력
-for rows in ws.iter_rows():
-    for cell in rows:
-        print(cell.value, end="\t\t\t")
-        wi+=1
-    print("")
-    oi+=1
-print(wi,oi)
-print(rows)
-col=[]
-row=[]
+# oi=0
+# wi=0
+# #row 기준으로 출력
+# for rows in ws.iter_rows():
+#     for cell in rows:
+#         print(cell.value, end="\t\t\t")
+#         wi+=1
+#     print("")
+#     oi+=1
+# print(wi,oi)
+# print(rows)
+# col=[]
+# row=[]
 
 # for rows in ws.iter_rows():
 #     for cell in rows:
@@ -47,17 +52,17 @@ row=[]
 #     print("")
 
 #rows=7
+# #
+# for i in range(1,41):
+#     for j in range(1,8):
+#         row.append(ws.cell(row=i, column=j).value)
+#     col.append(row);
+#     row=[]
 #
-for i in range(1,41):
-    for j in range(1,8):
-        row.append(ws.cell(row=i, column=j).value)
-    col.append(row);
-    row=[]
-
-for i in range(40):
-    for j in range(7):
-        print(col[i][j], end=" ")
-    print("")
+# for i in range(40):
+#     for j in range(7):
+#         print(col[i][j], end=" ")
+#     print("")
 
 # # countt=0
 #
