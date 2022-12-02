@@ -27,7 +27,6 @@ def defaultset():
     안치기간1.insert(0,"수량")
     안치기간2.insert(0,"금액")
 def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따라 사용되는 파일이 다름 -> 원본 시트의 목록 삭제 -> 새로운 시트의 목록 출력
-
     nwb = openpyxl.Workbook() #엑셀 생성
     pws = nwb.create_sheet("personal_info") #+sheet 이름
     iws = nwb.create_sheet("items") #+sheet 이름 2
@@ -87,14 +86,12 @@ def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따�
         리스트.insert((i - 1), one_line)
         one_line = ""
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
-    ws = wb['Sheet1'] #원본 시트 참조
     count=0
 
     for rows in ws.iter_rows():
         count+=1
     return count
 def get_cells(): #원본 시트의 총 셀 수를 가진다.
-    ws = wb['Sheet1'] #원본 시트 참조
     count=0
 
     for rows in ws.iter_rows():
@@ -102,12 +99,11 @@ def get_cells(): #원본 시트의 총 셀 수를 가진다.
             count+=1
     return count
 def in_list(): #2차원 리스트에 저장 --oglist(원본 손상 없이 그대로 유지)
-    ws = wb['Sheet1']
     row=[]
     #원본 시트 사용
     for i in range(1,(get_rows()+1)):
         for j in range(1, 8):
-            row.append(ws.cell(row=i, column=j).value)
+            row.append(ws_data.cell(row=i, column=j).value)
         oglist.append(row)
         row = []
 def close():
@@ -118,7 +114,9 @@ def close():
 
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
 wb_data = openpyxl.load_workbook(home, data_only=True) #값으로
+ws_data=wb_data['Sheet1']
 wb = openpyxl.load_workbook(home) #함수 그대로
+ws = wb['Sheet1']
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
 swh=True #첫 목록 여러번 나오지 않게 하려고 만들었는데 필요 없을 수 있음 -> defaultset()
 
