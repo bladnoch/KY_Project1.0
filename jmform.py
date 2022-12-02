@@ -10,14 +10,7 @@ import tkinter.ttk
 #def time():
 def checker():
     messagebox.showinfo("",show_oglist)
-def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저장 안함
-    row=[]
-    #원본 시트 사용
-    for i in range(2,(get_rows()+1)):
-        for j in range(2, 8):
-            row.append(ws_data.cell(row=i, column=j).value)
-        show_oglist.append(row)
-        row = []
+
 # def defaultset():
 #     ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
 #     one_line=""
@@ -37,6 +30,7 @@ def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저�
 #     빈소기간2.insert(0,"단가")
 #     안치기간1.insert(0,"단위")
 #     안치기간2.insert(0,"수량")
+
 # def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따라 사용되는 파일이 다름 -> 원본 시트의 목록 삭제 -> 새로운 시트의 목록 출력
 #     nwb = openpyxl.Workbook() #엑셀 생성
 #     pws = nwb.create_sheet("personal_info") #+sheet 이름
@@ -97,9 +91,16 @@ def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저�
 #         리스트.insert((i - 1), one_line)
 #         one_line = ""
 #         리스트.insert(i,iws)
+def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저장 안함
+    row=[]
+    #원본 시트 사용
+    for i in range(2,(get_rows()+1)):
+        for j in range(2, 8):
+            row.append(ws_data.cell(row=i, column=j).value)
+        show_oglist.append(row)
+        row = []
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
     count=0
-
     for rows in ws.iter_rows():
         count+=1
     return count
@@ -172,10 +173,6 @@ ID_lab.config(text = "ID", width=10, relief="solid")
 상주명_lab.config(text = "상주명",width=10, relief="solid")
 빈소_lab = Label(win)
 빈소_lab.config(text = "빈소", width=10, relief="solid")
-# 빈소기간_lab = Label(win)
-# 빈소기간_lab.config(text = "빈소기간", width=10, relief="solid")
-# 안치기간_lab = Label(win)
-# 안치기간_lab.config(text = "안치기간", width=10, relief="solid")
 물결1_lab = Label(win)
 물결1_lab.config(text = "~", width=10)
 물결2_lab = Label(win)
@@ -228,14 +225,6 @@ Set = Button(win, text = "기본 Set")
 Set.config(width=10,height=3)
 
 
-# 리스트 = Listbox(win, selectmode = 'extended',width = 180, height = 30)
-# 리스트.yview()
-
-#DK 엑셀 저장된 2차원 리스트 불러오기
-
-# if (swh==True):
-#     defaultset()
-#     swh==False
 in_list()
 show_in_list()
 
@@ -279,8 +268,6 @@ ID_lab.place(x=10,y=10)
 고인명_lab.place(x=210,y=10)
 상주명_lab.place(x=410,y=10)
 빈소_lab.place(x=10,y=50)
-# 빈소기간_lab.place(x=10,y=90)
-# 안치기간_lab.place(x=10,y=130)
 물결1_lab.place(x=250,y=90)
 물결2_lab.place(x=250,y=130)
 ###
@@ -310,7 +297,5 @@ ID.place(x=110,y=10)
 매점판매.place(x=800, y=150)
 Set.place(x=900, y=150)
 
-#리스트 위치
-# 리스트.place(x=10, y=210)
 
 win.mainloop() # 창 실행
