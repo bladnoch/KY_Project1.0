@@ -4,8 +4,8 @@ import tkinter.ttk
 def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저장 안함
     row=[]
     #원본 시트 사용
-    for i in range(2,(get_rows()+1)):
-        for j in range(2, 8):
+    for i in range(1,(get_rows())+1):
+        for j in range(1, 8):
             row.append(ws_data.cell(row=i, column=j).value)
         show_oglist.append(row)
         row = []
@@ -15,6 +15,18 @@ def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 
     for rows in ws_data.iter_rows():
         count+=1
     return count
+
+def tree_makeer():
+    get = []
+    for i in range(1, get_rows()):
+        for j in range(1, 7):
+            get.append(show_oglist[i][j])
+        treelist.append(get)
+        get = []
+
+    for i in range(len(treelist)):
+        treeview.insert('', 'end', text=i + 2, values=treelist[i])
+
 
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
 wb_data = openpyxl.load_workbook(home, data_only=True) #값으로
@@ -27,8 +39,8 @@ window=tkinter.Tk()
 show_oglist=[]
 show_in_list()
 
-treeview = tkinter.ttk.Treeview(window, columns=["one", "two","three","four","five","six","seven"],
-                                displaycolumns=["one", "two","three","four","five","six","seven"])
+treeview = tkinter.ttk.Treeview(window, columns=["one", "two","three","four","five","six"],
+                                displaycolumns=["one","two","three","four","five","six"])
 treeview.pack()
 
 treeview.column("#0", width=30)
@@ -52,7 +64,12 @@ treeview.heading("five", text="수량", anchor="e")
 treeview.column("#6", width=50, anchor="w")
 treeview.heading("six", text="금액", anchor="center")
 
-treelist=show_oglist
+treelist=[]
+show_oglist
+
+#프린트를 위해 첫번째 row랑 column 제거
+tree_makeer()
+
 
 
 #     [
@@ -60,8 +77,6 @@ treelist=show_oglist
 #     (oglist[2][1],oglist[2][2],oglist[2][3],oglist[2][4],oglist[2][5],oglist[2][6])
  # ]
 
-for i in range(len(treelist)):
-    treeview.insert('', 'end', text=i+2, values=treelist[i], iid=str(i) + "번")
 
 # top = treeview.insert('', 'end', text=str(len(treelist)), iid="5번", tags="tag1")
 

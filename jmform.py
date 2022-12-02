@@ -57,25 +57,13 @@ def checker():
 #     iws['G1'] = '금액'
 #
 #     #원본 파일을 새로운 파일에 복사
-#     for i in range(2,(get_rows()+1)):
+#     for i in range(1,(get_rows()+1)):
 #         for j in range(1, 8):
 #             iws.cell(row=i,column=j).value=oglist[i-1][j-1]
 #
 #     #이름이 같으면 덮어씀
-#     # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
-#     if (room=="1"):
-#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
-#     elif(room=="2"):
-#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_two.xlsx')
-#     elif (room == "3"):
-#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_three.xlsx')
-#     elif (room == "4"):
-#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_four.xlsx')
-#     elif (room == "5"):
-#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_five.xlsx')
-#     elif (room == "6"):
-#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_six.xlsx')
-#
+    # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
+
 #     리스트.delete(0, get_rows()) #출력된 원본 시트 목록 제삭
 #
 #
@@ -91,14 +79,40 @@ def checker():
 #         리스트.insert((i - 1), one_line)
 #         one_line = ""
 #         리스트.insert(i,iws)
-def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저장 안함
-    row=[]
-    #원본 시트 사용
-    for i in range(2,(get_rows()+1)):
-        for j in range(2, 8):
-            row.append(ws_data.cell(row=i, column=j).value)
-        show_oglist.append(row)
-        row = []
+def create_room():
+    nwb = openpyxl.Workbook()  # 엑셀 생성
+    pws = nwb.create_sheet("personal_info")  # +sheet 이름
+    iws = nwb.create_sheet("items")  # +sheet 이름 2
+
+    # sheet 1(personal_info)에 들어갈 정보
+    # A:ID B:고인명 C:상주명 D:빈소
+    pws['A1'] = ID.get()
+    pws['B1'] = 고인명.get()
+    pws['C1'] = 상주명.get()
+    pws['D1'] = 빈소.get()
+    room = 빈소.get()
+
+    # sheet 2(items)에 들어갈 정보
+    #A:번호(용도 모름) B:물품코드 C:뭂품명 D:단위 E:단가 F:수량 G:금액
+    for i in range(1, (get_rows() + 1)):
+        for j in range(1, 8):
+            iws.cell(row=i, column=j).value = oglist[i - 1][j - 1]
+
+
+    # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
+    if (room == "1"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
+    elif (room == "2"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_two.xlsx')
+    elif (room == "3"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_three.xlsx')
+    elif (room == "4"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_four.xlsx')
+    elif (room == "5"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_five.xlsx')
+    elif (room == "6"):
+        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_six.xlsx')
+
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
     count=0
     for rows in ws.iter_rows():
@@ -119,6 +133,15 @@ def in_list(): #2차원 리스트에 저장 --oglist(원본 손상 없이 그대
             row.append(ws_data.cell(row=i, column=j).value)
         oglist.append(row)
         row = []
+def tree_maker(): #프린트를 위해 첫번째 row랑 column 제거
+    get = []
+    for i in range(1, get_rows()):
+        for j in range(1, 7):
+            get.append(oglist[i][j])
+        treelist.append(get)
+        get = []
+    for i in range(len(treelist)):
+        treeview.insert('', 'end', text=i + 2, values=treelist[i])
 def close():
     win.quit()
     win.destroy()
@@ -132,8 +155,7 @@ ws_data=wb_data['Sheet1'] #사용 시트 지정
 wb = openpyxl.load_workbook(home) #함수 그대로
 ws = wb['Sheet1'] #사용 시트 지정
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
-show_oglist=[]
-swh=True #첫 목록 여러번 나오지 않게 하려고 만들었는데 필요 없을 수 있음 -> defaultset()
+treelist=[] #테이블에 사용되는 2차원 배열 ->tree_maker
 
 
 #Tkinter 윈도우 화면
@@ -226,15 +248,14 @@ Set.config(width=10,height=3)
 
 
 in_list()
-show_in_list()
 
 #########################   treeview  ##########################
 
-treeview = tkinter.ttk.Treeview(win, columns=["one", "two","three","four","five","six","seven"],
-                                displaycolumns=["one", "two","three","four","five","six","seven"],height=25)
+treeview = tkinter.ttk.Treeview(win, columns=["one", "two","three","four","five","six"],
+                                displaycolumns=["one", "two","three","four","five","six"],height=25)
 treeview.pack()
-treeview.column("#0", width=100)
-treeview.heading("#0", text="번호")
+treeview.column("#0", width=40, anchor="center")
+treeview.heading("#0", text="번호", anchor="center")
 
 treeview.column("one", width=100, anchor="center")
 treeview.heading("one", text="물품코드", anchor="center")
@@ -254,11 +275,9 @@ treeview.heading("five", text="수량", anchor="center")
 treeview.column("#6", width=100, anchor="center")
 treeview.heading("six", text="금액", anchor="center")
 
-treelist=show_oglist
 
+tree_maker()
 
-for i in range(len(show_oglist)):
-    treeview.insert('', 'end', text=i+2, values=treelist[i], iid=str(i) + "번")
 
 #########################   place  ##########################
 
