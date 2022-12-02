@@ -9,7 +9,7 @@ import tkinter.ttk
 
 #def time():
 def checker():
-    messagebox.showinfo("",show_oglist)
+    messagebox.showinfo("","no item")
 
 # def defaultset():
 #     ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
@@ -94,7 +94,7 @@ def create_room():
 
     # sheet 2(items)에 들어갈 정보
     #A:번호(용도 모름) B:물품코드 C:뭂품명 D:단위 E:단가 F:수량 G:금액
-    for i in range(1, (get_rows() + 1)):
+    for i in range(1, (get_rows() +1)):
         for j in range(1, 8):
             iws.cell(row=i, column=j).value = oglist[i - 1][j - 1]
 
@@ -156,7 +156,7 @@ wb = openpyxl.load_workbook(home) #함수 그대로
 ws = wb['Sheet1'] #사용 시트 지정
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
 treelist=[] #테이블에 사용되는 2차원 배열 ->tree_maker
-
+in_list()
 
 #Tkinter 윈도우 화면
 win = Tk() # 창 생성
@@ -232,7 +232,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
 
 #버튼 정의
-저장 = Button(win, text = "저장",) #command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
+저장 = Button(win, text = "저장", command=create_room) #DK command로 버튼 클릭시 def create_room() 실행
 저장.config(width=10,height=2)
 #btn.config(command=ID_a)
 현금수납 = Button(win, text = "현금수납")
@@ -247,7 +247,7 @@ Set = Button(win, text = "기본 Set")
 Set.config(width=10,height=3)
 
 
-in_list()
+
 
 #########################   treeview  ##########################
 
