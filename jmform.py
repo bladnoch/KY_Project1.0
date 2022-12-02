@@ -2,91 +2,101 @@ from tkinter import * # tkinter의 모든 함수 가져오기
 from tkinter import messagebox
 import openpyxl
 from openpyxl.worksheet.table import Table, TableStyleInfo
+import tkinter.ttk
 
 
 #from datetime improt datetime
 
 #def time():
-def defaultset():
-    ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
-    one_line=""
-
-    for i in range(1,(get_rows()+1)): #원본 파일을 리스트 박스에 출력
-        for j in range(1, 8):
-            if (str(ws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
-                one_line += "0"
-            else:
-                one_line += str(ws.cell(row=i, column=j).value) + '  '
-
-        리스트.insert((i-1), one_line)
-        one_line=""
-
-    #임시로 입력을 받기 위해 수정한 텍스트 박스
-    빈소기간1.insert(0,"물품명")
-    빈소기간2.insert(0,"단가")
-    안치기간1.insert(0,"단위")
-    안치기간2.insert(0,"수량")
-def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따라 사용되는 파일이 다름 -> 원본 시트의 목록 삭제 -> 새로운 시트의 목록 출력
-    nwb = openpyxl.Workbook() #엑셀 생성
-    pws = nwb.create_sheet("personal_info") #+sheet 이름
-    iws = nwb.create_sheet("items") #+sheet 이름 2
-
-
-    # sheet 1(personal_info)에 들어갈 정보
-    # A:ID B:고인명 C:상주명 D:빈소
-    pws['A1'] = ID.get()
-    pws['B1'] = 고인명.get()
-    pws['C1'] = 상주명.get()
-    pws['D1'] = 빈소.get()
-    room=빈소.get()
-
-
-    # sheet 2(items)에 들어갈 정보
-    #A:번호(용도 모름) B:물품코드 C:뭂품명 D:단위 E:단가 F:수량 G:금액
-    iws['A1'] = "번호"
-    iws['B1'] = "물품코드"  # 물품명 string
-    iws['C1'] = '물품명'
-    iws['D1'] = '단위'
-    iws['E1'] = '단가'
-    iws['F1'] = '수량'
-    iws['G1'] = '금액'
-
-    #원본 파일을 새로운 파일에 복사
+def checker():
+    messagebox.showinfo("",show_oglist)
+def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저장 안함
+    row=[]
+    #원본 시트 사용
     for i in range(2,(get_rows()+1)):
-        for j in range(1, 8):
-            iws.cell(row=i,column=j).value=oglist[i-1][j-1]
-
-    #이름이 같으면 덮어씀
-    # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
-    if (room=="1"):
-        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
-    elif(room=="2"):
-        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_two.xlsx')
-    elif (room == "3"):
-        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_three.xlsx')
-    elif (room == "4"):
-        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_four.xlsx')
-    elif (room == "5"):
-        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_five.xlsx')
-    elif (room == "6"):
-        nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_six.xlsx')
-
-    리스트.delete(0, get_rows()) #출력된 원본 시트 목록 제삭
-
-
-    one_line = ""
-    # 원본파일에서 복사된 새 시트의 목록들 출력
-    for i in range(1, (get_rows() + 1)):
-        for j in range(1, 8):
-            if (str(iws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
-                one_line += "0"
-            else:
-                one_line += str(iws.cell(row=i, column=j).value)+"     \t"
-
-        리스트.insert((i - 1), one_line)
-        one_line = ""
-        리스트.insert(i,iws)
-
+        for j in range(2, 8):
+            row.append(ws_data.cell(row=i, column=j).value)
+        show_oglist.append(row)
+        row = []
+# def defaultset():
+#     ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
+#     one_line=""
+#
+#     for i in range(1,(get_rows()+1)): #원본 파일을 리스트 박스에 출력
+#         for j in range(1, 8):
+#             if (str(ws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
+#                 one_line += "0"
+#             else:
+#                 one_line += str(ws.cell(row=i, column=j).value) + '  '
+#
+#         리스트.insert((i-1), one_line)
+#         one_line=""
+#
+#     #임시로 입력을 받기 위해 수정한 텍스트 박스
+#     빈소기간1.insert(0,"물품명")
+#     빈소기간2.insert(0,"단가")
+#     안치기간1.insert(0,"단위")
+#     안치기간2.insert(0,"수량")
+# def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따라 사용되는 파일이 다름 -> 원본 시트의 목록 삭제 -> 새로운 시트의 목록 출력
+#     nwb = openpyxl.Workbook() #엑셀 생성
+#     pws = nwb.create_sheet("personal_info") #+sheet 이름
+#     iws = nwb.create_sheet("items") #+sheet 이름 2
+#
+#
+#     # sheet 1(personal_info)에 들어갈 정보
+#     # A:ID B:고인명 C:상주명 D:빈소
+#     pws['A1'] = ID.get()
+#     pws['B1'] = 고인명.get()
+#     pws['C1'] = 상주명.get()
+#     pws['D1'] = 빈소.get()
+#     room=빈소.get()
+#
+#
+#     # sheet 2(items)에 들어갈 정보
+#     #A:번호(용도 모름) B:물품코드 C:뭂품명 D:단위 E:단가 F:수량 G:금액
+#     iws['A1'] = "번호"
+#     iws['B1'] = "물품코드"  # 물품명 string
+#     iws['C1'] = '물품명'
+#     iws['D1'] = '단위'
+#     iws['E1'] = '단가'
+#     iws['F1'] = '수량'
+#     iws['G1'] = '금액'
+#
+#     #원본 파일을 새로운 파일에 복사
+#     for i in range(2,(get_rows()+1)):
+#         for j in range(1, 8):
+#             iws.cell(row=i,column=j).value=oglist[i-1][j-1]
+#
+#     #이름이 같으면 덮어씀
+#     # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
+#     if (room=="1"):
+#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx')
+#     elif(room=="2"):
+#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_two.xlsx')
+#     elif (room == "3"):
+#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_three.xlsx')
+#     elif (room == "4"):
+#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_four.xlsx')
+#     elif (room == "5"):
+#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_five.xlsx')
+#     elif (room == "6"):
+#         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_six.xlsx')
+#
+#     리스트.delete(0, get_rows()) #출력된 원본 시트 목록 제삭
+#
+#
+#     one_line = ""
+#     # 원본파일에서 복사된 새 시트의 목록들 출력
+#     for i in range(1, (get_rows() + 1)):
+#         for j in range(1, 8):
+#             if (str(iws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
+#                 one_line += "0"
+#             else:
+#                 one_line += str(iws.cell(row=i, column=j).value)+"     \t"
+#
+#         리스트.insert((i - 1), one_line)
+#         one_line = ""
+#         리스트.insert(i,iws)
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
     count=0
 
@@ -121,6 +131,7 @@ ws_data=wb_data['Sheet1'] #사용 시트 지정
 wb = openpyxl.load_workbook(home) #함수 그대로
 ws = wb['Sheet1'] #사용 시트 지정
 oglist=[]   #2차원 리스트에 값 저장할 때 사용 ->in_list()
+show_oglist=[]
 swh=True #첫 목록 여러번 나오지 않게 하려고 만들었는데 필요 없을 수 있음 -> defaultset()
 
 
@@ -130,6 +141,7 @@ win.geometry("1000x720") # 창의 크기
 win.title("장례식장 재고관리 프로그램 Ver1.221123") # 창의 제목
 win.option_add("*Font", "맑은고딕 11") # 전체 폰트
 #win.resizable(False, False) #윈도우 사이즈 조절 불가
+
 
 #########################   excel   ##########################
 
@@ -201,7 +213,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
 
 #버튼 정의
-저장 = Button(win, text = "저장", command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
+저장 = Button(win, text = "저장",) #command=myFunc) #DK command로 버튼 클릭시 def myFunc() 실행
 저장.config(width=10,height=2)
 #btn.config(command=ID_a)
 현금수납 = Button(win, text = "현금수납")
@@ -209,27 +221,60 @@ ID.config(width=10,relief="solid",borderwidth=2)
 닫기 = Button(win, text = "닫기")
 닫기.config(width=10,height=3,command =close)
 식당판매 = Button(win, text = "식당판매")
-식당판매.config(width=10,height=3)
+식당판매.config(width=10,height=3, command=checker)
 매점판매 = Button(win, text = "매점판매")
 매점판매.config(width=10,height=3)
 Set = Button(win, text = "기본 Set")
 Set.config(width=10,height=3)
 
 
-리스트 = Listbox(win, selectmode = 'extended',width = 180, height = 30)
-리스트.yview()
+# 리스트 = Listbox(win, selectmode = 'extended',width = 180, height = 30)
+# 리스트.yview()
 
 #DK 엑셀 저장된 2차원 리스트 불러오기
 
-if (swh==True):
-    defaultset()
-    swh==False
+# if (swh==True):
+#     defaultset()
+#     swh==False
 in_list()
+show_in_list()
 
+#########################   treeview  ##########################
+
+treeview = tkinter.ttk.Treeview(win, columns=["one", "two","three","four","five","six","seven"],
+                                displaycolumns=["one", "two","three","four","five","six","seven"],height=25)
+treeview.pack()
+treeview.column("#0", width=100)
+treeview.heading("#0", text="번호")
+
+treeview.column("one", width=100, anchor="center")
+treeview.heading("one", text="물품코드", anchor="center")
+
+treeview.column("#2", width=100, anchor="center")
+treeview.heading("two", text="물품명", anchor="center")
+
+treeview.column("#3", width=100, anchor="center")
+treeview.heading("three", text="단위", anchor="center")
+
+treeview.column("#4", width=100, anchor="center")
+treeview.heading("four", text="단가", anchor="center")
+
+treeview.column("#5", width=100, anchor="center")
+treeview.heading("five", text="수량", anchor="center")
+
+treeview.column("#6", width=100, anchor="center")
+treeview.heading("six", text="금액", anchor="center")
+
+treelist=show_oglist
+
+
+for i in range(len(show_oglist)):
+    treeview.insert('', 'end', text=i+2, values=treelist[i], iid=str(i) + "번")
 
 #########################   place  ##########################
 
 #레이블 위치
+treeview.place(x=10,y=210)
 ID_lab.place(x=10,y=10)
 고인명_lab.place(x=210,y=10)
 상주명_lab.place(x=410,y=10)
@@ -266,6 +311,6 @@ ID.place(x=110,y=10)
 Set.place(x=900, y=150)
 
 #리스트 위치
-리스트.place(x=10, y=210)
+# 리스트.place(x=10, y=210)
 
 win.mainloop() # 창 실행

@@ -1,13 +1,13 @@
-import tkinter.ttk
 import openpyxl
+import tkinter.ttk
 
-def in_list(): #2차원 리스트에 저장 --oglist(원본 손상 없이 그대로 유지)
+def show_in_list(): #시트용 리스트에 저장 --목록하고 번호는 저장 안함
     row=[]
     #원본 시트 사용
     for i in range(2,(get_rows()+1)):
         for j in range(2, 8):
             row.append(ws_data.cell(row=i, column=j).value)
-        oglist.append(row)
+        show_oglist.append(row)
         row = []
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
     count=0
@@ -22,10 +22,10 @@ ws_data=wb_data['Sheet1'] #사용 시트 지정
 
 
 window=tkinter.Tk()
-window.geometry("640x400+100+100")
-window.resizable(False,False)
-oglist=[]
-in_list()
+# window.geometry("640x400+100+100")
+# window.resizable(False,False)
+show_oglist=[]
+show_in_list()
 
 treeview = tkinter.ttk.Treeview(window, columns=["one", "two","three","four","five","six","seven"],
                                 displaycolumns=["one", "two","three","four","five","six","seven"])
@@ -52,7 +52,7 @@ treeview.heading("five", text="수량", anchor="e")
 treeview.column("#6", width=50, anchor="w")
 treeview.heading("six", text="금액", anchor="center")
 
-treelist=oglist
+treelist=show_oglist
 
 
 #     [
