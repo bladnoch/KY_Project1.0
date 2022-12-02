@@ -81,10 +81,11 @@ def myFunc(): #새 파일과 시트 생성 -> 빈소에 들어간 숫자에 따�
             if (str(iws.cell(row=i, column=j).value) == "None"):  # DK G의 함수를 None -> 0으로 받기
                 one_line += "0"
             else:
-                one_line += str(iws.cell(row=i, column=j).value) + '\t\t'
+                one_line += str(iws.cell(row=i, column=j).value)+"     \t"
 
         리스트.insert((i - 1), one_line)
         one_line = ""
+        리스트.insert(i,iws)
 
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
     count=0
