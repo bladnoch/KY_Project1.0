@@ -8,8 +8,21 @@ import tkinter.ttk
 #from datetime improt datetime
 
 #def time():
+
+def edit():
+    selected_item = treeview.selection()[0]
+    treeview.item(selected_item,  values=("foo", "bar"))
+def delete():
+    selected_item = treeview.selection()[0] ## get selected item
+    treeview.delete(selected_item)
+
 def checker():
-    messagebox.showinfo("","no item")
+    # selected_item = treeview.selection()[0] ## get selected item
+    # selected_item = treeview.selection()[0]
+    # treeview.item(selected_item, values=("foo", "bar"))
+    # treeview.delete(selected_item)
+    messagebox.showinfo("",treeview.selection()[0])
+
 
 # def defaultset():
 #     ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
@@ -113,6 +126,7 @@ def create_room():
     elif (room == "6"):
         nwb.save('/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_six.xlsx')
 
+    tree_maker()
 def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 목록)
     count=0
     for rows in ws.iter_rows():
@@ -120,7 +134,6 @@ def get_rows(): #원본 시트의 rows 길이를 구한다(아이템 숫자+첫 
     return count
 def get_cells(): #원본 시트의 총 셀 수를 가진다.
     count=0
-
     for rows in ws.iter_rows():
         for cell in rows:
             count+=1
@@ -239,11 +252,11 @@ ID.config(width=10,relief="solid",borderwidth=2)
 현금수납.config(width=10,height=3)
 닫기 = Button(win, text = "닫기")
 닫기.config(width=10,height=3,command =close)
-식당판매 = Button(win, text = "식당판매")
-식당판매.config(width=10,height=3, command=checker)
-매점판매 = Button(win, text = "매점판매")
+식당판매 = Button(win, text = "edit")
+식당판매.config(width=10,height=3, command=edit)
+매점판매 = Button(win, text = "delete", command=delete)
 매점판매.config(width=10,height=3)
-Set = Button(win, text = "기본 Set")
+Set = Button(win, text = "checker",command=checker)
 Set.config(width=10,height=3)
 
 
@@ -257,23 +270,23 @@ treeview.pack()
 treeview.column("#0", width=40, anchor="center")
 treeview.heading("#0", text="번호", anchor="center")
 
-treeview.column("one", width=100, anchor="center")
-treeview.heading("one", text="물품코드", anchor="center")
+treeview.column("#1", width=100, anchor="center")
+treeview.heading("#1", text="물품코드", anchor="center")
 
 treeview.column("#2", width=100, anchor="center")
-treeview.heading("two", text="물품명", anchor="center")
+treeview.heading("#2", text="물품명", anchor="center")
 
 treeview.column("#3", width=100, anchor="center")
-treeview.heading("three", text="단위", anchor="center")
+treeview.heading("#3", text="단위", anchor="center")
 
 treeview.column("#4", width=100, anchor="center")
-treeview.heading("four", text="단가", anchor="center")
+treeview.heading("#4", text="단가", anchor="center")
 
 treeview.column("#5", width=100, anchor="center")
-treeview.heading("five", text="수량", anchor="center")
+treeview.heading("#5", text="수량", anchor="center")
 
 treeview.column("#6", width=100, anchor="center")
-treeview.heading("six", text="금액", anchor="center")
+treeview.heading("#6", text="금액", anchor="center")
 
 
 tree_maker()
