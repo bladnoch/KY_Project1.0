@@ -8,13 +8,25 @@ def close():
     win.quit()
     win.destroy()
 def set_xl(): #빈소 기준으로 저장용 파일 지정해서 생성 + visiter에 숫자 저장해서 필요할때 사용
+    visiter=빈소.get()
+    row = []
+    # 원본 시트 사용
+    for i in range(1, (get_rows() + 1)):
+        for j in range(1, 8):
+            row.append(ws.cell(row=i, column=j).value)
+        oglist.append(row)
+        row = []
+def save(): #저장 눌렀을때 작동. 개인정보, 시트 지정해서 저장
+    if (빈소.get()==""):
+        messagebox.showinfo("","빈소를 정해주세요")
+
     info['A1'] = ID.get()
     info['B1'] = 고인명.get()
     info['C1'] = 상주명.get()
     info['D1'] = 빈소.get()
-    room=빈소.get()
+    room = 빈소.get()
 
-    visiter=room
+    visiter = room
     # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
     if (room == "1"):
         nwb.save(room1)
@@ -52,6 +64,7 @@ info=nwb.create_sheet("info")  # +sheet 이름 1
 items=nwb.create_sheet("items")  # +sheet 이름 2
 
 visiter="0" #사람 정보용
+oglist=[] #기본 물품 엑셀
 wb= openpyxl.load_workbook(home, data_only=True) #값으로
 ws=wb['Sheet1'] #사용 시트 지정
 
@@ -102,7 +115,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 
 ##################################################   buttons   ##########################
 저장 = Button(win, text = "저장")
-저장.config(width=10,height=2, command=set_xl)
+저장.config(width=10,height=2, command=save)
 불러오기 = Button(win, text = "불러오기")
 불러오기.config(width=10,height=2)
 닫기 = Button(win, text = "닫기")

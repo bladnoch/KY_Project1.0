@@ -157,6 +157,28 @@ def tree_maker(): #프린트를 위해 첫번째 row랑 column 제거
         get = []
     for i in range(len(treelist)):
         treeview.insert('', 'end', text=i + 2, values=treelist[i])
+def call_tree():
+
+    treeview.column("#0", width=40, anchor="center")
+    treeview.heading("#0", text="번호", anchor="center")
+
+    treeview.column("#1", width=100, anchor="center")
+    treeview.heading("#1", text="물품코드", anchor="center")
+
+    treeview.column("#2", width=100, anchor="center")
+    treeview.heading("#2", text="물품명", anchor="center")
+
+    treeview.column("#3", width=100, anchor="center")
+    treeview.heading("#3", text="단위", anchor="center")
+
+    treeview.column("#4", width=100, anchor="center")
+    treeview.heading("#4", text="단가", anchor="center")
+
+    treeview.column("#5", width=100, anchor="center")
+    treeview.heading("#5", text="수량", anchor="center")
+
+    treeview.column("#6", width=100, anchor="center")
+    treeview.heading("#6", text="금액", anchor="center")
 def close():
     win.quit()
     win.destroy()
@@ -269,28 +291,9 @@ Set.config(width=10,height=3)
 treeview = tkinter.ttk.Treeview(win, columns=["one", "two","three","four","five","six"],
                                 displaycolumns=["one", "two","three","four","five","six"],height=25)
 treeview.pack()
-treeview.column("#0", width=40, anchor="center")
-treeview.heading("#0", text="번호", anchor="center")
-
-treeview.column("#1", width=100, anchor="center")
-treeview.heading("#1", text="물품코드", anchor="center")
-
-treeview.column("#2", width=100, anchor="center")
-treeview.heading("#2", text="물품명", anchor="center")
-
-treeview.column("#3", width=100, anchor="center")
-treeview.heading("#3", text="단위", anchor="center")
-
-treeview.column("#4", width=100, anchor="center")
-treeview.heading("#4", text="단가", anchor="center")
-
-treeview.column("#5", width=100, anchor="center")
-treeview.heading("#5", text="수량", anchor="center")
-
-treeview.column("#6", width=100, anchor="center")
-treeview.heading("#6", text="금액", anchor="center")
 
 
+call_tree()
 tree_maker()
 
 
