@@ -12,6 +12,8 @@ import tkinter.ttk
 def edit():
     selected_item = treeview.selection()[0]
     treeview.item(selected_item,  values=("foo", "bar"))
+
+
 def delete():
     selected_item = treeview.selection()[0] ## get selected item
     treeview.delete(selected_item)
@@ -94,7 +96,7 @@ def checker():
 #         리스트.insert(i,iws)
 def create_room():
     nwb = openpyxl.Workbook()  # 엑셀 생성
-    pws = nwb.create_sheet("personal_info")  # +sheet 이름
+    pws = nwb.create_sheet("info")  # +sheet 이름
     iws = nwb.create_sheet("items")  # +sheet 이름 2
 
     # sheet 1(personal_info)에 들어갈 정보
