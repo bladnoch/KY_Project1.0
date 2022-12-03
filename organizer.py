@@ -7,46 +7,135 @@ import tkinter.ttk
 def close():
     win.quit()
     win.destroy()
-def set_xl(): #빈소 기준으로 저장용 파일 지정해서 생성 + visiter에 숫자 저장해서 필요할때 사용
-    visiter=빈소.get()
+def set_xl(): #시작하면 바로 시작
     row = []
+    count=0
+    global treelist
+    treelist=[]
+    for rows in ws.iter_rows(): #기본 물품의 rows 값
+        count += 1
     # 원본 시트 사용
-    for i in range(1, (get_rows() + 1)):
+    for i in range(1, (count + 1)): #og_list에 기본 물품 저장
         for j in range(1, 8):
             row.append(ws.cell(row=i, column=j).value)
-        oglist.append(row)
+        og_list.append(row)
         row = []
+
+    count = 0
+    for rows in ws.iter_rows():
+        count += 1
+
+    global tree
+    tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five", "six"],
+                                displaycolumns=["one", "two", "three", "four", "five", "six"], height=25)
+
+    tree.column("#0", width=40, anchor="center")
+    tree.heading("#0", text="번호", anchor="center")
+
+    tree.column("#1", width=100, anchor="center")
+    tree.heading("#1", text="물품코드", anchor="center")
+
+    tree.column("#2", width=100, anchor="center")
+    tree.heading("#2", text="물품명", anchor="center")
+
+    tree.column("#3", width=100, anchor="center")
+    tree.heading("#3", text="단위", anchor="center")
+
+    tree.column("#4", width=100, anchor="center")
+    tree.heading("#4", text="단가", anchor="center")
+
+    tree.column("#5", width=100, anchor="center")
+    tree.heading("#5", text="수량", anchor="center")
+
+    tree.column("#6", width=100, anchor="center")
+    tree.heading("#6", text="금액", anchor="center")
+
+    get = []
+    for i in range(1, count):
+        for j in range(1, 7):
+            get.append(og_list[i][j])
+        treelist.append(get)
+        get = []
+    for i in range(len(treelist)):
+        tree.insert('', 'end', text=i + 2, values=treelist[i])
+
+
 def save(): #저장 눌렀을때 작동. 개인정보, 시트 지정해서 저장
     if (빈소.get()==""):
         messagebox.showinfo("","빈소를 정해주세요")
+    else:
+        room = 빈소.get()
+        visiter=room
 
-    info['A1'] = ID.get()
-    info['B1'] = 고인명.get()
-    info['C1'] = 상주명.get()
-    info['D1'] = 빈소.get()
-    room = 빈소.get()
+        info['A1'] = ID.get()
+        info['B1'] = 고인명.get()
+        info['C1'] = 상주명.get()
+        info['D1'] = visiter
 
-    visiter = room
-    # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
-    if (room == "1"):
-        nwb.save(room1)
-    elif (room == "2"):
-        nwb.save(room2)
-    elif (room == "3"):
-        nwb.save(room3)
-    elif (room == "4"):
-        nwb.save(room4)
-    elif (room == "5"):
-        nwb.save(room5)
-    elif (room == "6"):
-        nwb.save(room6)
+
+
+        # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
+        if (room == "1"):
+            nwb.save(room1)
+        elif (room == "2"):
+            nwb.save(room2)
+        elif (room == "3"):
+            nwb.save(room3)
+        elif (room == "4"):
+            nwb.save(room4)
+        elif (room == "5"):
+            nwb.save(room5)
+        elif (room == "6"):
+            nwb.save(room6)
+
 def checker():
-    messagebox.showinfo("빈소.get()",빈소.get())
+    messagebox.showinfo("빈소.get()",visiter)
+
+def get_rows():
+    if (visiter==0):
+        count = 0
+        for rows in ws.iter_rows():
+            count += 1
+        return count
 def get_rows(sheet):
     count = 0
     for rows in sheet.iter_rows():
         count += 1
     return count
+def call_tree():
+    global tree
+    tree= tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five", "six"],
+                                    displaycolumns=["one", "two", "three", "four", "five", "six"], height=25)
+
+    tree.column("#0", width=40, anchor="center")
+    tree.heading("#0", text="번호", anchor="center")
+
+    tree.column("#1", width=100, anchor="center")
+    tree.heading("#1", text="물품코드", anchor="center")
+
+    tree.column("#2", width=100, anchor="center")
+    tree.heading("#2", text="물품명", anchor="center")
+
+    tree.column("#3", width=100, anchor="center")
+    tree.heading("#3", text="단위", anchor="center")
+
+    tree.column("#4", width=100, anchor="center")
+    tree.heading("#4", text="단가", anchor="center")
+
+    tree.column("#5", width=100, anchor="center")
+    tree.heading("#5", text="수량", anchor="center")
+
+    tree.column("#6", width=100, anchor="center")
+    tree.heading("#6", text="금액", anchor="center")
+
+    get = []
+    for i in range(1, get_rows()):
+        for j in range(1, 7):
+            get.append(og_list[i][j])
+        treelist.append(get)
+        get = []
+    for i in range(len(treelist)):
+        tree.insert('', 'end', text=i + 2, values=treelist[i])
 
 
 ##################################################   global variable   ##########################
@@ -64,9 +153,12 @@ info=nwb.create_sheet("info")  # +sheet 이름 1
 items=nwb.create_sheet("items")  # +sheet 이름 2
 
 visiter="0" #사람 정보용
-oglist=[] #기본 물품 엑셀
+og_list=[] #기본 물품 엑셀
+new_list=[] #새 물품 엑셀
 wb= openpyxl.load_workbook(home, data_only=True) #값으로
 ws=wb['Sheet1'] #사용 시트 지정
+
+
 
 
 ##################################################   tkinter   ##########################
@@ -128,7 +220,8 @@ Set = Button(win, text = "checker")
 Set.config(width=10,height=3, command=checker)
 
 
-
+set_xl()
+# call_tree()
 ##################################################   place   ##########################
 #labels
 ID_lab.place(x=10,y=10)
@@ -151,6 +244,7 @@ ID.place(x=110,y=10)
 거스름돈.place(x=720,y=110)
 
 #버튼 위치
+tree.place(x=10,y=210)
 저장.place(x= 350, y=50)
 불러오기.place(x=470,y=50)
 닫기.place(x=370, y=150)

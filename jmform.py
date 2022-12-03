@@ -12,19 +12,15 @@ import tkinter.ttk
 def edit():
     selected_item = treeview.selection()[0]
     treeview.item(selected_item,  values=("foo", "bar"))
-
-
 def delete():
     selected_item = treeview.selection()[0] ## get selected item
     treeview.delete(selected_item)
-
 def checker():
     # selected_item = treeview.selection()[0] ## get selected item
     # selected_item = treeview.selection()[0]
     # treeview.item(selected_item, values=("foo", "bar"))
     # treeview.delete(selected_item)
-    messagebox.showinfo("",treeview.selection()[0])
-
+    messagebox.showinfo("",type(treeview))
 
 # def defaultset():
 #     ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
@@ -148,6 +144,7 @@ def in_list(): #2차원 리스트에 저장 --oglist(원본 손상 없이 그대
             row.append(ws_data.cell(row=i, column=j).value)
         oglist.append(row)
         row = []
+
 def tree_maker(): #프린트를 위해 첫번째 row랑 column 제거
     get = []
     for i in range(1, get_rows()):
@@ -158,6 +155,9 @@ def tree_maker(): #프린트를 위해 첫번째 row랑 column 제거
     for i in range(len(treelist)):
         treeview.insert('', 'end', text=i + 2, values=treelist[i])
 def call_tree():
+    global treeview
+    treeview= tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five", "six"],
+                                    displaycolumns=["one", "two", "three", "four", "five", "six"], height=25)
 
     treeview.column("#0", width=40, anchor="center")
     treeview.heading("#0", text="번호", anchor="center")
@@ -179,6 +179,17 @@ def call_tree():
 
     treeview.column("#6", width=100, anchor="center")
     treeview.heading("#6", text="금액", anchor="center")
+
+    get = []
+    for i in range(1, get_rows()):
+        for j in range(1, 7):
+            get.append(oglist[i][j])
+        treelist.append(get)
+        get = []
+    for i in range(len(treelist)):
+        treeview.insert('', 'end', text=i + 2, values=treelist[i])
+
+
 def close():
     win.quit()
     win.destroy()
@@ -188,6 +199,7 @@ def close():
 home = "/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx" #기본 물품 엑셀 위치 저장
 wb_data = openpyxl.load_workbook(home, data_only=True) #값으로
 ws_data=wb_data['Sheet1'] #사용 시트 지정
+
 
 wb = openpyxl.load_workbook(home) #함수 그대로
 ws = wb['Sheet1'] #사용 시트 지정
@@ -288,19 +300,18 @@ Set.config(width=10,height=3)
 
 #########################   treeview  ##########################
 
-treeview = tkinter.ttk.Treeview(win, columns=["one", "two","three","four","five","six"],
-                                displaycolumns=["one", "two","three","four","five","six"],height=25)
-treeview.pack()
-
+# treeview = tkinter.ttk.Treeview(win, columns=["one", "two","three","four","five","six"],
+#                                 displaycolumns=["one", "two","three","four","five","six"],height=25)
+#
 
 call_tree()
-tree_maker()
+# tree_maker()
 
 
 #########################   place  ##########################
 
 #레이블 위치
-treeview.place(x=10,y=210)
+treeview.place(x=10, y=210)
 ID_lab.place(x=10,y=10)
 고인명_lab.place(x=210,y=10)
 상주명_lab.place(x=410,y=10)
