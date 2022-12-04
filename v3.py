@@ -10,7 +10,6 @@ def close():
 
 def first():
     row=[]
-    get=[]
     count=0
 
     for rows in ws.iter_rows(): #기본 물품의 rows 값
@@ -22,20 +21,11 @@ def first():
         og_l.append(row)
         row = []
 
-    tree =tkinter.ttk.Treeview(win, columns=["og_list"],displaycolumns=["og_list"],height=25)
-
-    tree.column("#0", width=40, anchor="center")
-    tree.heading("#0", text="번호", anchor="center")
-
-    tree.column("#1", width=100, anchor="center")
-    tree.heading("#1", text="물품명", anchor="center")
-
-
     for i in range(1,count):
         treelist.append(og_l[i][3])
 
-    for i in range(len(treelist)):
-        tree.insert('', 'end', text=i+2, values=treelist[i],iid=str(i))
+
+
 
 ##################################################   global variable   ##########################
 
