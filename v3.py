@@ -12,11 +12,36 @@ def openxl():
     def close():
         openxl.quit()
         openxl.destroy()
+    def add_in():
+        row=[]
+        count=0
+        for rows in ws.iter_rows():  # 기본 물품의 rows 값
+            count += 1
 
+        for j in range(1,8):
+            if (j==3):
+                row.append(e_item.get())
+                ws.cell(row=count+1,column=j).value=e_item.get()
+            elif (j==4):
+                row.append(e_count.get())
+                ws.cell(row=count+1, column=j).value = e_count.get()
+            elif(j==5):
+                row.append(e_price.get())
+                ws.cell(row=count+1, column=j).value = e_price.get()
+            else:
+                row.append(" ")
+                ws.cell(row=count+1, column=j).value = " "
+            og_l.append(row)
+        wb.save(home)
+        리스트.delete(0,count+1)
+        first()
+        close()
+
+    #
     openxl=Tk()
 
     openxl.geometry("300x170")  # 창의 크기
-    openxl.title("장례식장 재고관리 프로그램 Ver1.221123")  # 창의 제목
+    openxl.title("물품 추가")  # 창의 제목
     openxl.option_add("*Font", "맑은고딕 11")  # 전체 폰트
 
     l_item = Label(openxl)
@@ -45,20 +70,21 @@ def openxl():
     e_count.place(x=110,y=80)
 
     save = Button(openxl, text="저장")
-    save.config(width=6, height=2)
+    save.config(width=6, height=2,command=add_in)
     save.place(x=60,y=115)
 
     cancel = Button(openxl, text="취소")
-    cancel.config(width=6, height=2)
+    cancel.config(width=6, height=2,command=close)
     cancel.place(x=150,y=115)
 
     openxl.mainloop()
-
 def close():
     win.quit()
     win.destroy()
-
+def checker():
+    win.update()
 def first():
+
     row=[]
     count=0
 
@@ -74,9 +100,7 @@ def first():
     for i in range(1,count):
         리스트.insert(i-1,og_l[i][2])
 
-def listitem():
 
-    messagebox(리스트.curselection())
 
 
 
@@ -158,8 +182,8 @@ ID.config(width=10,relief="solid",borderwidth=2)
 불러오기.config(width=10,height=2)
 닫기 = Button(win, text = "닫기",command=close)
 닫기.config(width=10,height=3)
-물품수정 = Button(win, text = "풀품수정",command=openxl)
-물품수정.config(width=7,height=2)
+물품추가 = Button(win, text = "풀품추가",command=openxl)
+물품추가.config(width=7,height=2)
 
 
 삭제 = Button(win, text = "삭제")
@@ -195,7 +219,7 @@ ID.place(x=110,y=10)
 저장.place(x= 350, y=50)
 불러오기.place(x=470,y=50)
 닫기.place(x=370, y=150)
-물품수정.place(x=10, y=150)
+물품추가.place(x=10, y=150)
 삭제.place(x=130, y=150)
 Set.place(x=250, y=150)
 
