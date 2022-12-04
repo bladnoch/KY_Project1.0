@@ -72,8 +72,6 @@ def save(): #저장 눌렀을때 작동. 개인정보, 시트 지정해서 저�
         info['C1'] = 상주명.get()
         info['D1'] = visiter
 
-
-
         # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
         if (room == "1"):
             nwb.save(room1)
