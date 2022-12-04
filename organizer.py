@@ -58,8 +58,6 @@ def set_xl(): #시작하면 바로 시작
         get = []
     for i in range(len(treelist)):
         tree.insert('', 'end', text=i + 2, values=treelist[i])
-
-
 def save(): #저장 눌렀을때 작동. 개인정보, 시트 지정해서 저장
     if (빈소.get()==""):
         messagebox.showinfo("","빈소를 정해주세요")
