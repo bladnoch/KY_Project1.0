@@ -20,7 +20,18 @@ def checker():
     # selected_item = treeview.selection()[0]
     # treeview.item(selected_item, values=("foo", "bar"))
     # treeview.delete(selected_item)
-    messagebox.showinfo("",type(treeview))
+
+    # for i in treeview.get_children():
+    #     treeview.delete(i)
+    # win.update()
+    oglist=[]
+
+    treeview.delete(*treeview.get_children()) #내부 기록 지우기
+
+    call_tree()
+    win.update()
+    # selected_item = treeview.selection()[0]
+    # messagebox.showinfo("",selected_item)
 
 # def defaultset():
 #     ws = wb_data['Sheet1'] # 값만 받기, 원본 파일 사용
@@ -155,7 +166,12 @@ def tree_maker(): #프린트를 위해 첫번째 row랑 column 제거
     for i in range(len(treelist)):
         treeview.insert('', 'end', text=i + 2, values=treelist[i])
 def call_tree():
+
     global treeview
+
+
+    treelist=[]
+
     treeview= tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five", "six"],
                                     displaycolumns=["one", "two", "three", "four", "five", "six"], height=25)
 
@@ -180,14 +196,19 @@ def call_tree():
     treeview.column("#6", width=100, anchor="center")
     treeview.heading("#6", text="금액", anchor="center")
 
+
+
     get = []
     for i in range(1, get_rows()):
         for j in range(1, 7):
             get.append(oglist[i][j])
         treelist.append(get)
         get = []
+
     for i in range(len(treelist)):
         treeview.insert('', 'end', text=i + 2, values=treelist[i])
+
+
 
 
 def close():
