@@ -10,7 +10,7 @@ import tkinter as tk
 
 
 
-def openxl():
+def openxl(): #기본 물품에 item 추가
     def close():
         openxl.quit()
         openxl.destroy()
@@ -85,11 +85,11 @@ def openxl():
 def close():
     win.quit()
     win.destroy()
-def first():
+def first(): #첫 시작시 실행, if엑셀 파일 생성, og_l에 목록 삽입, 빈 트리 생성
     row=[]
     count=0
 
-    for i in range(1,7):
+    for i in range(1,7): #room 엑셀이 없으면 엑셀 생성
         path = Path(rooms[i])
         if (str(path.is_file()) == "False"):
             nwb = openpyxl.Workbook()  # 엑셀 생성
@@ -112,7 +112,7 @@ def first():
 
     global tree
     tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-                                displaycolumns=["one", "two", "three", "four", "five"], height=27)
+                                displaycolumns=["one", "two", "three", "four", "five"], height=24)
 
     tree.column("#0", width=10, anchor="center")
     tree.heading("#0", text="", anchor="center")
@@ -132,7 +132,7 @@ def first():
     tree.column("#5", width=100, anchor="center")
     tree.heading("#5", text="금액", anchor="center")
 
-    if (opener == True):
+    if (opener == True): #처음 열때는 빈 tree로 출력
         get = []
         for i in range(1, count):
             for j in range(2, 7):
@@ -153,7 +153,7 @@ def first():
             tree.insert('', 'end', text=str(i + 2), values=treelist[i])
 
     tree.delete(*tree.get_children())
-def call_tree():
+def call_tree(): #아직 사용 안함
     count = 0
     for rows in ws.iter_rows():  # 기본 물품의 rows 값
         count += 1
@@ -192,15 +192,16 @@ def call_tree():
 
     tree.delete(*tree.get_children())
     win.update()
-def check():
+def check(): #값 출력해서 확인하는 용도
     count = 0
     for rows in ws.iter_rows():  # 기본 물품의 rows 값
         count += 1
     path = Path(room1)
     messagebox.showinfo("", str(path.is_file()))
     # messagebox.showinfo("",)
-def save():
+def save(): #저장관련: 개인정보, tree에 있는 목록 저장
     room=빈소.get()
+    messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
 #저장 항목: ID, 고인명, 상주명, 빈소, tree
     if (room == ""):
         messagebox.showinfo("", "빈소를 정해주세요")
@@ -257,7 +258,7 @@ def save():
                 for j in range(5):
                     # loc=alp[j]+str(i)
                     items.cell(row=i+1,column=j+1).value=new_l[i][j]
-                    messagebox.showinfo("",new_l[i][j])
+                    # messagebox.showinfo("",new_l[i][j])
 
             nwb.save(room3)
 
@@ -316,7 +317,7 @@ def save():
             nwb.save(room6)
     else:
         messagebox.showinfo('없는 빈소',"정확한 빈소명을 입력해주세요")
-def clickEvent(event):
+def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 tree에 추가
     eventNum=list(리스트.curselection())
     num=eventNum[0]
     # messagebox.showinfo("",type(num))
@@ -332,9 +333,10 @@ def clickEvent(event):
         og_l.append(row)
         row = []
 
-    messagebox.showinfo("",str(og_l[num+1][2])+" "+str(og_l[num+1][3])+" "+str(og_l[num+1][4])+" "+str(og_l[num+1][5]))
+    # messagebox.showinfo("",str(og_l[num+1][2])+" "+str(og_l[num+1][3])+" "+str(og_l[num+1][4])+" "+str(og_l[num+1][5]))
 
 #------
+
     global tree
     del tree
     treelist = []
@@ -375,12 +377,12 @@ def clickEvent(event):
 
     for i in range(len(new_l)):
         tree.insert('', 'end', text=i+1, values=new_l[i])
-    messagebox.showinfo("treelist[i]",new_l[i])
+    # messagebox.showinfo("treelist[i]",new_l[i])
 
     tree.place(x=170,y=210)
     # tree.delete(*tree.get_children())
     win.update()
-def clear_tree():
+def clear_tree(): #빈 tree 출력
     tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
                                 displaycolumns=["one", "two", "three", "four", "five"], height=27)
 
@@ -484,7 +486,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 받은금액.config(width=20,relief="solid",borderwidth=2)
 거스름돈 = Entry(win)
 거스름돈.config(width=20,relief="solid",borderwidth=2)
-리스트 = Listbox(win, selectmode = 'extended',width = 15, height = 30,borderwidth=0)
+리스트 = Listbox(win, selectmode = 'extended',width = 15, height = 27,borderwidth=0)
 리스트.bind("<Double-Button-1>", clickEvent)
 리스트.yview()
 
@@ -540,7 +542,7 @@ ID.place(x=110,y=10)
 물품비우기.place(x=700, y=230)
 Set.place(x=700, y=150)
 tree.place(x=170,y=210)
-리스트.place(x=49, y=234)
+리스트.place(x=48, y=236)
 
 
 win.mainloop() # 창 실행
