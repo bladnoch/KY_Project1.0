@@ -1,28 +1,19 @@
-import tkinter as Tk
+import tkinter as tk
 
-master = Tk.Tk()
+def cb(event):
+    label['text'] = str(event) + '\n' + str(lb.curselection())
 
-listbox = Tk.Listbox(master)
-listbox.pack()
+root = tk.Tk()
+var = tk.StringVar(value=dir(tk))
 
-# Insert few elements in listbox:
-for item in ["zero", "one", "two", "three", "four", "five", "six", "seven"]:
-    listbox.insert(Tk.END, item)
-# Return index of desired element to seek for
-def check_index(element):
-   try:
-       index = listbox.get(0, "end").index(element)
-       return index
-   except ValueError:
-       print'Item can not be found in the list!'
-       index = -1 # Or whatever value you want to assign to it by default
-       return index
+label = tk.Label(root)
+label.grid()
 
-print check_index('three')    # Will print 3
+lb = tk.Listbox(root, listvariable=var, selectmode='extended')
+lb.grid()
+lb.bind('<<ListboxSelect>>', cb)
 
-print check_index(100) # This will print:
-                     # Item can not be found in the list!
-                     # -1
+root.mainloop()
 # import openpyxl
 # import tkinter.ttk
 #

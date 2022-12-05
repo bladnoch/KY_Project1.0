@@ -155,7 +155,6 @@ def in_list(): #2차원 리스트에 저장 --oglist(원본 손상 없이 그대
             row.append(ws_data.cell(row=i, column=j).value)
         oglist.append(row)
         row = []
-
 def tree_maker(): #프린트를 위해 첫번째 row랑 column 제거
     get = []
     for i in range(1, get_rows()):

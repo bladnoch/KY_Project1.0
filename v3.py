@@ -180,25 +180,15 @@ def call_tree():
     tree.column("#5", width=100, anchor="center")
     tree.heading("#5", text="금액", anchor="center")
 
-    if (opener==True):
-        get = []
-        for i in range(1, count):
-            for j in range(2, 7):
-                get.append("")
-            treelist.append(get)
-            get = []
-        for i in range(len(treelist)):
-            tree.insert('', 'end', text="", values=treelist[i])
 
-    else:
+    get = []
+    for i in range(1, count):
+        for j in range(2, 7):
+            get.append(og_l[i][j])
+        treelist.append(get)
         get = []
-        for i in range(1, count):
-            for j in range(2, 7):
-                get.append(og_l[i][j])
-            treelist.append(get)
-            get = []
-        for i in range(len(treelist)):
-            tree.insert('', 'end', text=i + 2, values=treelist[i])
+    for i in range(len(treelist)):
+        tree.insert('', 'end', text=i + 2, values=treelist[i])
 
     tree.delete(*tree.get_children())
     win.update()
@@ -290,8 +280,71 @@ def save():
     else:
         messagebox.showinfo('없는 빈소',"정확한 빈소명을 입력해주세요")
 def clickEvent(event):
-    messagebox.showinfo("",str(리스트.curselection()))
+    eventNum=list(리스트.curselection())
+    num=eventNum[0]
+    # messagebox.showinfo("",type(num))
+
+    row=[]
+    count=0
+    for rows in ws.iter_rows(): #기본 물품의 rows 값
+        count += 1
+
+    for i in range(1, (count + 1)):  # og_list에 기본 물품 저장
+        for j in range(1, 8):
+            row.append(ws.cell(row=i, column=j).value)
+        og_l.append(row)
+        row = []
+
+    messagebox.showinfo("",str(og_l[num+1][2])+" "+str(og_l[num+1][3])+" "+str(og_l[num+1][4])+" "+str(og_l[num+1][5]))
+
+#------
+    global tree
+    del tree
+    treelist = []
+
+    tree= tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
+                                    displaycolumns=["one", "two", "three", "four", "five"], height=27)
+
+    tree.column("#0", width=10, anchor="center")
+    tree.heading("#0", text="", anchor="center")
+
+    tree.column("#1", width=100, anchor="center")
+    tree.heading("#1", text="물품명", anchor="center")
+
+    tree.column("#2", width=100, anchor="center")
+    tree.heading("#2", text="단위", anchor="center")
+
+    tree.column("#3", width=100, anchor="center")
+    tree.heading("#3", text="단가", anchor="center")
+
+    tree.column("#4", width=100, anchor="center")
+    tree.heading("#4", text="수량", anchor="center")
+
+    tree.column("#5", width=100, anchor="center")
+    tree.heading("#5", text="금액", anchor="center")
+
+
+    get = []
+
+    for i in range(2,7):
+        if(og_l[num+1][i]==""):
+            og_l[num+1][i]=" "
+        get.append(og_l[num+1][i])
+    treelist.append(get)
+    new_l.append(get)
+        # messagebox.showinfo("", og_l[num+1][i])
+
+    for i in range(len(new_l)):
+        tree.insert('', 'end', text=i+1, values=new_l[i])
+    messagebox.showinfo("treelist[i]",new_l[i])
+
+    tree.place(x=180,y=220)
+    # tree.delete(*tree.get_children())
     win.update()
+
+
+
+
 
 ##################################################   global variable   ##########################
 
@@ -314,16 +367,12 @@ ws=wb['Sheet1'] #초기 시트 사용 선언
 
 global rooms
 rooms=['',room1,room2,room3,room4,room5,room6]
-
 global og_l #초기 리스트 저장공간
 og_l=[]
-
 global new_l #새로운 리스트 저장공간
-
-
+new_l=[]
 global treelist #list
 treelist=[]
-
 global opener
 opener=True
 
