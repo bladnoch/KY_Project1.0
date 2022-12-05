@@ -9,7 +9,6 @@ import tkinter.ttk
 import tkinter as tk
 
 
-# def openfile():
 def openxl():
     def close():
         openxl.quit()
@@ -201,7 +200,7 @@ def check():
     # messagebox.showinfo("",)
 def save():
     room=빈소.get()
-
+#저장 항목: ID, 고인명, 상주명, 빈소, tree
     if (room == ""):
         messagebox.showinfo("", "빈소를 정해주세요")
     elif ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")):
@@ -216,6 +215,12 @@ def save():
             info['C1'] = 상주명.get()
             info['D1'] = room
 
+            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)
+                for j in range(5):
+                    # loc=alp[j]+str(i)
+                    items.cell(row=i+1,column=j+1).value=new_l[i][j]
+                    # messagebox.showinfo("",new_l[i][j])
+
             nwb.save(room1)
 
         elif (room == "2"):
@@ -227,6 +232,13 @@ def save():
             info['B1'] = 고인명.get()
             info['C1'] = 상주명.get()
             info['D1'] = room
+
+
+            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)
+                for j in range(5):
+                    # loc=alp[j]+str(i)
+                    items.cell(row=i+1,column=j+1).value=new_l[i][j]
+                    # messagebox.showinfo("",new_l[i][j])
 
             nwb.save(room2)
 
@@ -240,6 +252,12 @@ def save():
             info['C1'] = 상주명.get()
             info['D1'] = room
 
+            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)
+                for j in range(5):
+                    # loc=alp[j]+str(i)
+                    items.cell(row=i+1,column=j+1).value=new_l[i][j]
+                    messagebox.showinfo("",new_l[i][j])
+
             nwb.save(room3)
 
         elif (room == "4"):
@@ -251,6 +269,12 @@ def save():
             info['B1'] = 고인명.get()
             info['C1'] = 상주명.get()
             info['D1'] = room
+
+            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)
+                for j in range(5):
+                    # loc=alp[j]+str(i)
+                    items.cell(row=i+1,column=j+1).value=new_l[i][j]
+                    # messagebox.showinfo("",new_l[i][j])
 
             nwb.save(room4)
 
@@ -264,6 +288,12 @@ def save():
             info['C1'] = 상주명.get()
             info['D1'] = room
 
+            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)
+                for j in range(5):
+                    # loc=alp[j]+str(i)
+                    items.cell(row=i+1,column=j+1).value=new_l[i][j]
+                    # messagebox.showinfo("",new_l[i][j])
+
             nwb.save(room5)
 
         elif (room == "6"):
@@ -275,6 +305,12 @@ def save():
             info['B1'] = 고인명.get()
             info['C1'] = 상주명.get()
             info['D1'] = room
+
+            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)
+                for j in range(5):
+                    # loc=alp[j]+str(i)
+                    items.cell(row=i+1,column=j+1).value=new_l[i][j]
+                    # messagebox.showinfo("",new_l[i][j])
 
             nwb.save(room6)
     else:
@@ -327,8 +363,10 @@ def clickEvent(event):
     get = []
 
     for i in range(2,7):
-        if(og_l[num+1][i]==""):
-            og_l[num+1][i]=" "
+        if(i==5):
+            og_l[num+1][i]=1
+        elif(i==6):
+            og_l[num+1][i]=og_l[num+1][i-2]*og_l[num+1][i-1]
         get.append(og_l[num+1][i])
     treelist.append(get)
     new_l.append(get)
@@ -338,7 +376,7 @@ def clickEvent(event):
         tree.insert('', 'end', text=i+1, values=new_l[i])
     messagebox.showinfo("treelist[i]",new_l[i])
 
-    tree.place(x=180,y=220)
+    tree.place(x=170,y=210)
     # tree.delete(*tree.get_children())
     win.update()
 
