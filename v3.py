@@ -9,6 +9,7 @@ import tkinter.ttk
 import tkinter as tk
 
 
+
 def openxl():
     def close():
         openxl.quit()
@@ -149,7 +150,7 @@ def first():
             treelist.append(get)
             get = []
         for i in range(len(treelist)):
-            tree.insert('', 'end', text=i + 2, values=treelist[i])
+            tree.insert('', 'end', text=str(i + 2), values=treelist[i])
 
     tree.delete(*tree.get_children())
 def call_tree():
@@ -187,7 +188,7 @@ def call_tree():
         treelist.append(get)
         get = []
     for i in range(len(treelist)):
-        tree.insert('', 'end', text=i + 2, values=treelist[i])
+        tree.insert('', 'end', text=str(i + 2), values=treelist[i])
 
     tree.delete(*tree.get_children())
     win.update()
@@ -379,7 +380,29 @@ def clickEvent(event):
     tree.place(x=170,y=210)
     # tree.delete(*tree.get_children())
     win.update()
+def clear_tree():
+    tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
+                                displaycolumns=["one", "two", "three", "four", "five"], height=27)
 
+    tree.column("#0", width=10, anchor="center")
+    tree.heading("#0", text="", anchor="center")
+
+    tree.column("#1", width=100, anchor="center")
+    tree.heading("#1", text="물품명", anchor="center")
+
+    tree.column("#2", width=100, anchor="center")
+    tree.heading("#2", text="단위", anchor="center")
+
+    tree.column("#3", width=100, anchor="center")
+    tree.heading("#3", text="단가", anchor="center")
+
+    tree.column("#4", width=100, anchor="center")
+    tree.heading("#4", text="수량", anchor="center")
+
+    tree.column("#5", width=100, anchor="center")
+    tree.heading("#5", text="금액", anchor="center")
+
+    tree.place(x=170, y=210)
 
 
 
@@ -467,21 +490,21 @@ ID.config(width=10,relief="solid",borderwidth=2)
 
 ##################################################   buttons   ##########################
 저장 = Button(win, text = "저장")
-저장.config(width=10,height=2,command=save)
+저장.config(width=14,height=2,command=save)
 불러오기 = Button(win, text = "불러오기")
-불러오기.config(width=10,height=2)
+불러오기.config(width=14,height=2)
 닫기 = Button(win, text = "닫기",command=close)
-닫기.config(width=10,height=3)
+닫기.config(width=14,height=3)
 물품추가 = Button(win, text = "물품추가",command=openxl)
 물품추가.config(width=7,height=2)
 물품삭제 = Button(win, text = "물품삭제")
 물품삭제.config(width=7,height=2)
 
 
-삭제 = Button(win, text = "삭제")
-삭제.config(width=10,height=3)
+물품비우기 = Button(win, text = "물품 비우기")
+물품비우기.config(width=7,height=2, command=clear_tree)
 Set = Button(win, text = "checker")
-Set.config(width=10,height=3, command=check)
+Set.config(width=7,height=2, command=check)
 
 first()
 
@@ -490,7 +513,7 @@ first()
 #labels
 ID_lab.place(x=10,y=10)
 고인명_lab.place(x=210,y=10)
-상주명_lab.place(x=410,y=10)
+상주명_lab.place(x=210,y=50)
 빈소_lab.place(x=10,y=50)
 수납금액_lab.place(x=620,y=10)
 받은금액_lab.place(x=620,y=60)
@@ -499,7 +522,7 @@ ID_lab.place(x=10,y=10)
 #엔트리 위치
 ID.place(x=110,y=10)
 고인명.place(x=310,y=10)
-상주명.place(x=510,y=10)
+상주명.place(x=310,y=50)
 빈소.place(x=110,y=50)
 
 
@@ -509,15 +532,15 @@ ID.place(x=110,y=10)
 
 #버튼 위치
 
-저장.place(x= 350, y=50)
-불러오기.place(x=470,y=50)
-닫기.place(x=370, y=150)
-물품추가.place(x=20, y=150)
-물품삭제.place(x=20, y=195)
-삭제.place(x=130, y=150)
-Set.place(x=250, y=150)
+저장.place(x= 440, y=10)
+불러오기.place(x=440,y=50)
+닫기.place(x=440, y=90)
+물품추가.place(x=700, y=270)
+물품삭제.place(x=700, y=310)
+물품비우기.place(x=700, y=230)
+Set.place(x=700, y=150)
 tree.place(x=170,y=210)
-리스트.place(x=20, y=240)
+리스트.place(x=49, y=234)
 
 
 win.mainloop() # 창 실행
