@@ -441,34 +441,7 @@ def clickEvent_delete(event):
     selected_item = tree.selection()[0]  ## get selected item
     # new_l=[]
     tree.delete(selected_item)
-def clear_tree(): #빈 tree 출력
-    c_table=True
 
-    # tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-    #                             displaycolumns=["one", "two", "three", "four", "five"], height=24)
-    #
-    # tree.column("#0", width=10, anchor="center")
-    # tree.heading("#0", text="", anchor="center")
-    #
-    # tree.column("#1", width=100, anchor="center")
-    # tree.heading("#1", text="물품명", anchor="center")
-    #
-    # tree.column("#2", width=100, anchor="center")
-    # tree.heading("#2", text="단위", anchor="center")
-    #
-    # tree.column("#3", width=100, anchor="center")
-    # tree.heading("#3", text="단가", anchor="center")
-    #
-    # tree.column("#4", width=100, anchor="center")
-    # tree.heading("#4", text="수량", anchor="center")
-    #
-    # tree.column("#5", width=100, anchor="center")
-    # tree.heading("#5", text="금액", anchor="center")
-    #
-    # tree.place(x=170, y=210)
-    #
-    # c_table= False
-    # clickEvent_delete(c_table)
 def loadxl():
     def close():
         loadxl.quit()
@@ -694,7 +667,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 
 
 물품비우기 = Button(win, text = "물품 비우기")
-물품비우기.config(width=7,height=2, command=clear_tree)
+물품비우기.config(width=7,height=2)
 Set = Button(win, text = "프린트")
 Set.config(width=10,height=3, command=check)
 
