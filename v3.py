@@ -380,10 +380,10 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
     # messagebox.showinfo("treelist[i]",new_l[i])
 
     tree.place(x=170,y=210)
-    tree.bind("<Double-Button-1>", clickEvent2_delete)
+    tree.bind("<Double-Button-1>", clickEvent_delete)
     # tree.delete(*tree.get_children())
     win.update()
-def clickEvent2_delete(event):
+def clickEvent_delete(event):
     messagebox.showinfo("",tree.selection_get())
 
     for i in range(len(new_l)): #삭제될 tree 요소를 list에서도 삭제
