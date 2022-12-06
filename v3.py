@@ -396,7 +396,7 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
         # messagebox.showinfo("", og_l[num+1][i])
     if (len(new_l)>=1):
         for i in range(len(new_l)):
-            tree.insert('', 'end', text=i+1, values=new_l[i])
+            tree.insert('', 'end', text="", values=new_l[i])
             # messagebox.showinfo("", new_l[i])
             # messagebox.showinfo("", len(new_l))
         # messagebox.showinfo("treelist[i]",new_l[i])
@@ -450,19 +450,99 @@ def clear_tree(): #빈 tree 출력
     # c_table= False
     # clickEvent_delete(c_table)
 def loadxl():
+    def clear_new_l():
+        # messagebox.showinfo("",len(new_l))
+        new_l.clear()
+        # for i in range(len(new_l)):
+        #     new_l.remove(new_l[0])
+        #     messagebox.showinfo("",new_l[0])
+    def del_tree():
+        tree.delete(*tree.get_children())
     def close():
-        openxl.quit()
-        openxl.destroy()
-    def add_in():
-        row=[]
+        loadxl.quit()
+        loadxl.destroy()
+
+    def load_btn():
+        roomNum=l_room.get()
+        # messagebox.showinfo("",roomNum)
+
+        rooms=[room1,room2,room3,room4,room5,room6]
+
+        for i in range(6): #사용할 시트를 찾아서 시트에 맞는 info,items 사용
+            nwb = openpyxl.load_workbook(rooms[i])
+            info = nwb["info"]
+            items = nwb["items"]
+
+            if (roomNum==info.cell(row=1, column=4).value): #맞는 빈소를 찾으면 멈추고 for문 종료
+                # messagebox.showinfo("", "True")
+                break
+
+        ID.delete(0,END)
+        고인명.delete(0, END)
+        상주명.delete(0, END)
+        빈소.delete(0, END)
+
+        ID.insert(0,info.cell(row=1, column=1).value)
+        고인명.insert(0,info.cell(row=1, column=2).value)
+        상주명.insert(0,info.cell(row=1, column=3).value)
+        빈소.insert(0,info.cell(row=1, column=4).value)
+
+
+        del_tree()
+
+        tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
+                                    displaycolumns=["one", "two", "three", "four", "five"], height=24)
+
+        tree.column("#0", width=10, anchor="center")
+        tree.heading("#0", text="", anchor="center")
+
+        tree.column("#1", width=100, anchor="center")
+        tree.heading("#1", text="물품명", anchor="center")
+
+        tree.column("#2", width=100, anchor="center")
+        tree.heading("#2", text="단위", anchor="center")
+
+        tree.column("#3", width=100, anchor="center")
+        tree.heading("#3", text="단가", anchor="center")
+
+        tree.column("#4", width=100, anchor="center")
+        tree.heading("#4", text="수량", anchor="center")
+
+        tree.column("#5", width=100, anchor="center")
+        tree.heading("#5", text="금액", anchor="center")
+
+
+
         count=0
-        first()
+        for rows in items.iter_rows():  # 기본 물품의 rows 값
+            count += 1
+        # messagebox.showinfo("","선택한 시트의 rows 갯수"+str(count))
+
+
+        put=[]
+        get=[]
+        for i in range(1,count+1):
+            for j in range(1,6):
+                get.append(items.cell(row=i,column=j).value)
+                # messagebox.showinfo("",items.cell(row=i,column=j).value)
+            put.append(get)
+            new_l.append(get)
+            get=[]
+        # messagebox.showinfo("",len(put))
+        for i in range(len(put)):
+            tree.insert('', 'end', text=" ", values=put[i])
+
+        tree.place(x=170, y=210)
+        clear_new_l()
+        messagebox.showinfo(new_l[0])
+        # tree.bind("<Double-Button-1>", click_del)
+
         close()
 
     #
     loadxl=Tk()
 
-    loadxl.geometry("300x100")  # 창의 크기
+    loadxl.geometry("300x120")  # 창의 크기
     loadxl.title("불러오기")  # 창의 제목
     loadxl.option_add("*Font", "맑은고딕 11")  # 전체 폰트
 
@@ -476,12 +556,12 @@ def loadxl():
     l_room.place(x=110,y=20)
 
     load = Button(loadxl, text="저장")
-    load.config(width=6, height=2,command=add_in)
-    load.place(x=60,y=115)
+    load.config(width=10, height=3,command=load_btn)
+    load.place(x=35,y=55)
 
     cancel = Button(loadxl, text="취소")
-    cancel.config(width=6, height=2,command=close)
-    cancel.place(x=150,y=115)
+    cancel.config(width=10, height=3,command=close)
+    cancel.place(x=145,y=55)
 
     loadxl.mainloop()
 
