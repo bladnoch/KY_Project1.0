@@ -11,6 +11,7 @@ import tkinter as tk
 
 
 def openxl(): #기본 물품에 item 추가
+    # os.system(home)
     def close():
         openxl.quit()
         openxl.destroy()
@@ -448,15 +449,49 @@ def clear_tree(): #빈 tree 출력
     #
     # c_table= False
     # clickEvent_delete(c_table)
+def loadxl():
+    def close():
+        openxl.quit()
+        openxl.destroy()
+    def add_in():
+        row=[]
+        count=0
+        first()
+        close()
 
+    #
+    loadxl=Tk()
+
+    loadxl.geometry("300x100")  # 창의 크기
+    loadxl.title("불러오기")  # 창의 제목
+    loadxl.option_add("*Font", "맑은고딕 11")  # 전체 폰트
+
+    l_room = Label(loadxl)
+    l_room.config(text="빈소 호수", width=10, relief="solid")
+    l_room.place(x=20,y=20)
+
+    l_room = Entry(loadxl)
+    l_room.config(width=20, relief="solid", borderwidth=2)
+
+    l_room.place(x=110,y=20)
+
+    load = Button(loadxl, text="저장")
+    load.config(width=6, height=2,command=add_in)
+    load.place(x=60,y=115)
+
+    cancel = Button(loadxl, text="취소")
+    cancel.config(width=6, height=2,command=close)
+    cancel.place(x=150,y=115)
+
+    loadxl.mainloop()
 
 
 
 ##################################################   global variable   ##########################
 
-home = '/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/test.xlsx' #기본 물품 엑셀 위치 저장
+home = 'excelhere/test.xlsx' #기본 물품 엑셀 위치 저장
 
-room1='/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_one.xlsx'
+room1='excelhere/room_one.xlsx'
 room2='/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_two.xlsx'
 room3='/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_three.xlsx'
 room4='/Users/doungukkim/Desktop/workspace/python/restinpeace/excelhere/room_four.xlsx'
@@ -538,7 +573,7 @@ ID.config(width=10,relief="solid",borderwidth=2)
 저장 = Button(win, text = "저장")
 저장.config(width=14,height=2,command=save)
 불러오기 = Button(win, text = "불러오기")
-불러오기.config(width=14,height=2)
+불러오기.config(width=14,height=2, command=loadxl)
 닫기 = Button(win, text = "닫기",command=close)
 닫기.config(width=14,height=3)
 물품추가 = Button(win, text = "물품추가",command=openxl)
