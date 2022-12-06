@@ -9,7 +9,8 @@ import tkinter.ttk
 import tkinter as tk
 
 
-
+def del_t():
+    tree.delete(*tree.get_children())
 def openxl(): #기본 물품에 item 추가
     # os.system(home)
     def close():
@@ -203,9 +204,6 @@ def check(): #값 출력해서 확인하는 용도
 def save(): #저장관련: 개인정보, tree에 있는 목록 저장
     room=빈소.get()
     messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
-
-
-
 #저장 항목: ID, 고인명, 상주명, 빈소, tree
     if (room == ""):
         messagebox.showinfo("", "빈소를 정해주세요")
@@ -218,6 +216,9 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
             # items = nwb["items"]  # +sheet 이름 2
             nwb.remove(nwb["items"])
             items = nwb.create_sheet("items")
+
+
+
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -259,6 +260,13 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
             # items = nwb["items"]  # +sheet 이름 2
             nwb.remove(nwb["items"])
             items = nwb.create_sheet("items")
+
+            if (ID.get() == ""):
+                info['A1'] = " "
+            if (상주명.get() == ""):
+                info['A1'] = " "
+            if (고인명.get() == ""):
+                info['A1'] = " "
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -337,7 +345,7 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
 def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 tree에 추가
     eventNum=list(리스트.curselection())
     num=eventNum[0]
-    # messagebox.showinfo("",event)
+    # messagebox.showinfo("",num)
 
     row=[]
     count=0
@@ -391,11 +399,11 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
     # treelist.append(get)
     new_l.append(get)
 
-
-
+    del_t()
         # messagebox.showinfo("", og_l[num+1][i])
     if (len(new_l)>=1):
         for i in range(len(new_l)):
+
             tree.insert('', 'end', text="", values=new_l[i])
             # messagebox.showinfo("", new_l[i])
             # messagebox.showinfo("", len(new_l))
@@ -456,8 +464,7 @@ def loadxl():
         # for i in range(len(new_l)):
         #     new_l.remove(new_l[0])
         #     messagebox.showinfo("",new_l[0])
-    def del_tree():
-        tree.delete(*tree.get_children())
+
     def close():
         loadxl.quit()
         loadxl.destroy()
@@ -482,13 +489,21 @@ def loadxl():
         상주명.delete(0, END)
         빈소.delete(0, END)
 
+        if (info.cell(row=1, column=1).value==""):
+            ID.insert(0," ")
+        if (info.cell(row=1, column=2).value==""):
+            고인명.insert(0," ")
+        if (info.cell(row=1, column=3).value==""):
+            상주명.insert(0," ")
+
+
         ID.insert(0,info.cell(row=1, column=1).value)
         고인명.insert(0,info.cell(row=1, column=2).value)
         상주명.insert(0,info.cell(row=1, column=3).value)
         빈소.insert(0,info.cell(row=1, column=4).value)
 
 
-        del_tree()
+
 
         tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
                                     displaycolumns=["one", "two", "three", "four", "five"], height=24)
