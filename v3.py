@@ -160,7 +160,7 @@ def call_tree(): #아직 사용 안함
 
     global tree
     tree= tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-                                    displaycolumns=["one", "two", "three", "four", "five"], height=27)
+                                    displaycolumns=["one", "two", "three", "four", "five"], height=24)
 
     tree.column("#0", width=10, anchor="center")
     tree.heading("#0", text="", anchor="center")
@@ -202,15 +202,21 @@ def check(): #값 출력해서 확인하는 용도
 def save(): #저장관련: 개인정보, tree에 있는 목록 저장
     room=빈소.get()
     messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
+
+
+
 #저장 항목: ID, 고인명, 상주명, 빈소, tree
     if (room == ""):
         messagebox.showinfo("", "빈소를 정해주세요")
     elif ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")):
+
         # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
         if (room == "1"):
             nwb = openpyxl.load_workbook(room1)
             info = nwb["info"]  # +sheet 이름 1
-            items = nwb["items"]  # +sheet 이름 2
+            # items = nwb["items"]  # +sheet 이름 2
+            nwb.remove(nwb["items"])
+            items = nwb.create_sheet("items")
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -228,7 +234,9 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
         elif (room == "2"):
             nwb = openpyxl.load_workbook(room2)
             info = nwb["info"]  # +sheet 이름 1
-            items = nwb["items"]  # +sheet 이름 2
+            # items = nwb["items"]  # +sheet 이름 2
+            nwb.remove(nwb["items"])
+            items = nwb.create_sheet("items")
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -247,7 +255,9 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
         elif (room == "3"):
             nwb = openpyxl.load_workbook(room3)
             info = nwb["info"]  # +sheet 이름 1
-            items = nwb["items"]  # +sheet 이름 2
+            # items = nwb["items"]  # +sheet 이름 2
+            nwb.remove(nwb["items"])
+            items = nwb.create_sheet("items")
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -265,7 +275,9 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
         elif (room == "4"):
             nwb = openpyxl.load_workbook(room4)
             info = nwb["info"]  # +sheet 이름 1
-            items = nwb["items"]  # +sheet 이름 2
+            # items = nwb["items"]  # +sheet 이름 2
+            nwb.remove(nwb["items"])
+            items = nwb.create_sheet("items")
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -283,7 +295,9 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
         elif (room == "5"):
             nwb = openpyxl.load_workbook(room5)
             info = nwb["info"]  # +sheet 이름 1
-            items = nwb["items"]  # +sheet 이름 2
+            # items = nwb["items"]  # +sheet 이름 2
+            nwb.remove(nwb["items"])
+            items = nwb.create_sheet("items")
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -301,7 +315,9 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
         elif (room == "6"):
             nwb = openpyxl.load_workbook(room6)
             info = nwb["info"]  # +sheet 이름 1
-            items = nwb["items"]  # +sheet 이름 2
+            # items = nwb["items"]  # +sheet 이름 2
+            nwb.remove(nwb["items"])
+            items = nwb.create_sheet("items")
 
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
@@ -320,7 +336,7 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
 def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 tree에 추가
     eventNum=list(리스트.curselection())
     num=eventNum[0]
-    # messagebox.showinfo("",type(num))
+    # messagebox.showinfo("",num)
 
     row=[]
     count=0
@@ -342,7 +358,7 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
     treelist = []
 
     tree= tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-                                    displaycolumns=["one", "two", "three", "four", "five"], height=27)
+                                    displaycolumns=["one", "two", "three", "four", "five"], height=24)
 
     tree.column("#0", width=10, anchor="center")
     tree.heading("#0", text="", anchor="center")
@@ -371,30 +387,46 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
         elif(i==6):
             og_l[num+1][i]=og_l[num+1][i-2]*og_l[num+1][i-1]
         get.append(og_l[num+1][i])
-    treelist.append(get)
+    # treelist.append(get)
     new_l.append(get)
+
+
         # messagebox.showinfo("", og_l[num+1][i])
+    if (len(new_l)>=1):
+        for i in range(len(new_l)):
+            tree.insert('', 'end', text=i+1, values=new_l[i])
+            # messagebox.showinfo("", new_l[i])
+            # messagebox.showinfo("", len(new_l))
+        # messagebox.showinfo("treelist[i]",new_l[i])
 
-    for i in range(len(new_l)):
-        tree.insert('', 'end', text=i+1, values=new_l[i])
-    # messagebox.showinfo("treelist[i]",new_l[i])
+        tree.place(x=170,y=210)
+        tree.bind("<Double-Button-1>", clickEvent_delete)
+    # get.clear()
 
-    tree.place(x=170,y=210)
-    tree.bind("<Double-Button-1>", clickEvent_delete)
     # tree.delete(*tree.get_children())
     win.update()
 def clickEvent_delete(event):
-    messagebox.showinfo("",tree.selection_get())
 
+
+    selectedItem=tree.selection()[0]
+    # messagebox.showinfo("",tree.item(selectedItem)['values'][0])
+    # messagebox.showinfo("",len(new_l))
     for i in range(len(new_l)): #삭제될 tree 요소를 list에서도 삭제
-        if(tree.selection_get()==new_l[i][0]):
+        if(tree.item(selectedItem)['values'][0]==new_l[i][0]):
             new_l.remove(new_l[i])
+            break;
+
+    # messagebox.showinfo("",tree.item(selectedItem)['values'][1])
 
     selected_item = tree.selection()[0]  ## get selected item
+    # new_l=[]
     tree.delete(selected_item)
 def clear_tree(): #빈 tree 출력
+
+
+
     tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-                                displaycolumns=["one", "two", "three", "four", "five"], height=27)
+                                displaycolumns=["one", "two", "three", "four", "five"], height=24)
 
     tree.column("#0", width=10, anchor="center")
     tree.heading("#0", text="", anchor="center")
@@ -415,6 +447,9 @@ def clear_tree(): #빈 tree 출력
     tree.heading("#5", text="금액", anchor="center")
 
     tree.place(x=170, y=210)
+
+    c_table= False
+    clickEvent_delete(c_table)
 
 
 
@@ -448,7 +483,8 @@ global treelist #list
 treelist=[]
 global opener
 opener=True
-
+global c_table
+c_table=True
 
 
 
@@ -549,7 +585,7 @@ ID.place(x=110,y=10)
 닫기.place(x=440, y=90)
 물품추가.place(x=700, y=270)
 물품삭제.place(x=700, y=310)
-물품비우기.place(x=700, y=230)
+# 물품비우기.place(x=700, y=230)
 Set.place(x=700, y=150)
 tree.place(x=170,y=210)
 리스트.place(x=48, y=236)
