@@ -474,6 +474,15 @@ def loadxl():
         loadxl.quit()
         loadxl.destroy()
     def load_btn():
+        def click_delete(event):
+            selectedItem = tree.selection()[0]
+            for i in range(len(new_l)):  # 삭제될 tree 요소를 list에서도 삭제
+                if (tree.item(selectedItem)['values'][0] == new_l[i][0]):
+                    new_l.remove(new_l[i])
+                    break;
+            selection = tree.selection()[0]
+            tree.delete(selection)
+
         roomNum=l_room.get()
         # messagebox.showinfo("",roomNum)
 
@@ -544,18 +553,20 @@ def loadxl():
         for i in range(len(put)):
             tree.insert('', 'end', text=" ", values=put[i])
 
-        tree.place(x=170, y=210)
-        tree.bind("<Double-Button-1>", click_delete)#-----------------------------------------------------
 
+        tree.place(x=170, y=210)
+        tree.bind("<Double-Button-1>", click_delete) #-----------------------------------------------------
+
+
+        # selected_item = tree.item()  ## get selected item
+        # tree.delete(selected_item)
         # clear_new_l()
         # messagebox.showinfo(new_l[0])
         # tree.bind("<Double-Button-1>", click_del)
 
         close()
 
-    def click_delete(event):
-        selected_item = tree.selection()[0]  ## get selected item
-        tree.delete(selected_item)
+
 
     loadxl=Tk()
 
