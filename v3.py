@@ -216,7 +216,6 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
         save_go()
 
     # messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
-#저장 항목: ID, 고인명, 상주명, 빈소, tree
 def save_go():
     room = 빈소.get()
     if ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")):
@@ -471,17 +470,9 @@ def clear_tree(): #빈 tree 출력
     # c_table= False
     # clickEvent_delete(c_table)
 def loadxl():
-    def clear_new_l():
-        # messagebox.showinfo("",len(new_l))
-        new_l.clear()
-        # for i in range(len(new_l)):
-        #     new_l.remove(new_l[0])
-        #     messagebox.showinfo("",new_l[0])
-
     def close():
         loadxl.quit()
         loadxl.destroy()
-
     def load_btn():
         roomNum=l_room.get()
         # messagebox.showinfo("",roomNum)
@@ -554,13 +545,18 @@ def loadxl():
             tree.insert('', 'end', text=" ", values=put[i])
 
         tree.place(x=170, y=210)
+        tree.bind("<Double-Button-1>", click_delete)#-----------------------------------------------------
+
         # clear_new_l()
         # messagebox.showinfo(new_l[0])
         # tree.bind("<Double-Button-1>", click_del)
 
         close()
 
-    #
+    def click_delete(event):
+        selected_item = tree.selection()[0]  ## get selected item
+        tree.delete(selected_item)
+
     loadxl=Tk()
 
     loadxl.geometry("300x120")  # 창의 크기
