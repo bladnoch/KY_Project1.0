@@ -336,7 +336,7 @@ def save(): #저장관련: 개인정보, tree에 있는 목록 저장
 def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 tree에 추가
     eventNum=list(리스트.curselection())
     num=eventNum[0]
-    # messagebox.showinfo("",num)
+    # messagebox.showinfo("",event)
 
     row=[]
     count=0
@@ -391,6 +391,7 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
     new_l.append(get)
 
 
+
         # messagebox.showinfo("", og_l[num+1][i])
     if (len(new_l)>=1):
         for i in range(len(new_l)):
@@ -401,13 +402,11 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
 
         tree.place(x=170,y=210)
         tree.bind("<Double-Button-1>", clickEvent_delete)
-    # get.clear()
 
+    # get.clear()
     # tree.delete(*tree.get_children())
     win.update()
 def clickEvent_delete(event):
-
-
     selectedItem=tree.selection()[0]
     # messagebox.showinfo("",tree.item(selectedItem)['values'][0])
     # messagebox.showinfo("",len(new_l))
@@ -422,34 +421,33 @@ def clickEvent_delete(event):
     # new_l=[]
     tree.delete(selected_item)
 def clear_tree(): #빈 tree 출력
+    c_table=True
 
-
-
-    tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-                                displaycolumns=["one", "two", "three", "four", "five"], height=24)
-
-    tree.column("#0", width=10, anchor="center")
-    tree.heading("#0", text="", anchor="center")
-
-    tree.column("#1", width=100, anchor="center")
-    tree.heading("#1", text="물품명", anchor="center")
-
-    tree.column("#2", width=100, anchor="center")
-    tree.heading("#2", text="단위", anchor="center")
-
-    tree.column("#3", width=100, anchor="center")
-    tree.heading("#3", text="단가", anchor="center")
-
-    tree.column("#4", width=100, anchor="center")
-    tree.heading("#4", text="수량", anchor="center")
-
-    tree.column("#5", width=100, anchor="center")
-    tree.heading("#5", text="금액", anchor="center")
-
-    tree.place(x=170, y=210)
-
-    c_table= False
-    clickEvent_delete(c_table)
+    # tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
+    #                             displaycolumns=["one", "two", "three", "four", "five"], height=24)
+    #
+    # tree.column("#0", width=10, anchor="center")
+    # tree.heading("#0", text="", anchor="center")
+    #
+    # tree.column("#1", width=100, anchor="center")
+    # tree.heading("#1", text="물품명", anchor="center")
+    #
+    # tree.column("#2", width=100, anchor="center")
+    # tree.heading("#2", text="단위", anchor="center")
+    #
+    # tree.column("#3", width=100, anchor="center")
+    # tree.heading("#3", text="단가", anchor="center")
+    #
+    # tree.column("#4", width=100, anchor="center")
+    # tree.heading("#4", text="수량", anchor="center")
+    #
+    # tree.column("#5", width=100, anchor="center")
+    # tree.heading("#5", text="금액", anchor="center")
+    #
+    # tree.place(x=170, y=210)
+    #
+    # c_table= False
+    # clickEvent_delete(c_table)
 
 
 
@@ -484,7 +482,7 @@ treelist=[]
 global opener
 opener=True
 global c_table
-c_table=True
+c_table=False
 
 
 
@@ -585,7 +583,7 @@ ID.place(x=110,y=10)
 닫기.place(x=440, y=90)
 물품추가.place(x=700, y=270)
 물품삭제.place(x=700, y=310)
-# 물품비우기.place(x=700, y=230)
+물품비우기.place(x=700, y=230)
 Set.place(x=700, y=150)
 tree.place(x=170,y=210)
 리스트.place(x=48, y=236)
