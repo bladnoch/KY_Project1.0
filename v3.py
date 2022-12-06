@@ -201,7 +201,6 @@ def check(): #값 출력해서 확인하는 용도
     path = Path(room1)
     messagebox.showinfo("", str(path.is_file()))
     # messagebox.showinfo("",)
-
 def save(): #저장관련: 개인정보, tree에 있는 목록 저장
     room=빈소.get()
     pinfo=[room,고인명.get(),상주명.get(),ID.get()]
@@ -625,7 +624,7 @@ c_table=False
 
 ##################################################   tkinter   ##########################
 win = tk.Tk() # 창 생성
-win.geometry("1000x720") # 창의 크기
+win.geometry("750x720") # 창의 크기
 win.title("장례식장 재고관리 프로그램 Ver1.221123") # 창의 제목
 win.option_add("*Font", "맑은고딕 12") # 전체 폰트
 
@@ -642,6 +641,9 @@ ID_lab.config(text = "ID", width=10, relief="solid")
 상주명_lab.config(text = "상주명",width=10, relief="solid")
 빈소_lab = Label(win)
 빈소_lab.config(text = "빈소", width=10, relief="solid")
+
+기간 = Label(win)
+기간.config(text = "빈소 기간 : XXXX / XX / XX ~ XXXX / XX / XX \n안치 기간 : XXXX / XX / XX ~ XXXX / XX / XX", width=47, relief="solid",height=3)
 
 수납금액_lab = Label(win)
 수납금액_lab.config(text = "수납금액", width=10, relief="solid")
@@ -677,17 +679,17 @@ ID.config(width=10,relief="solid",borderwidth=2)
 불러오기 = Button(win, text = "불러오기")
 불러오기.config(width=14,height=2, command=loadxl)
 닫기 = Button(win, text = "닫기",command=close)
-닫기.config(width=14,height=3)
+닫기.config(width=10,height=3)
 물품추가 = Button(win, text = "물품추가",command=openxl)
-물품추가.config(width=7,height=2)
+물품추가.config(width=10,height=1)
 물품삭제 = Button(win, text = "물품삭제")
 물품삭제.config(width=7,height=2)
 
 
 물품비우기 = Button(win, text = "물품 비우기")
 물품비우기.config(width=7,height=2, command=clear_tree)
-Set = Button(win, text = "checker")
-Set.config(width=7,height=2, command=check)
+Set = Button(win, text = "프린트")
+Set.config(width=10,height=3, command=check)
 
 first()
 
@@ -698,30 +700,31 @@ ID_lab.place(x=10,y=10)
 고인명_lab.place(x=210,y=10)
 상주명_lab.place(x=210,y=50)
 빈소_lab.place(x=10,y=50)
-수납금액_lab.place(x=620,y=10)
-받은금액_lab.place(x=620,y=60)
-거스름돈_lab.place(x=620,y=110)
+수납금액_lab.place(x=420,y=10)
+받은금액_lab.place(x=420,y=50)
+거스름돈_lab.place(x=420,y=90)
+기간.place(x=10,y=90)
 
 #엔트리 위치
-ID.place(x=110,y=10)
-고인명.place(x=310,y=10)
-상주명.place(x=310,y=50)
-빈소.place(x=110,y=50)
+ID.place(x=100,y=10)
+고인명.place(x=300,y=10)
+상주명.place(x=300,y=50)
+빈소.place(x=100,y=50)
 
 
-수납금액.place(x=720,y=10)
-받은금액.place(x=720,y=60)
-거스름돈.place(x=720,y=110)
+수납금액.place(x=510,y=10)
+받은금액.place(x=510,y=50)
+거스름돈.place(x=510,y=90)
 
 #버튼 위치
 
-저장.place(x= 440, y=10)
-불러오기.place(x=440,y=50)
-닫기.place(x=440, y=90)
-물품추가.place(x=700, y=270)
-물품삭제.place(x=700, y=310)
-물품비우기.place(x=700, y=230)
-Set.place(x=700, y=150)
+저장.place(x= 10, y=150)
+불러오기.place(x=160,y=150)
+닫기.place(x=560, y=120)
+물품추가.place(x=48, y=207)
+# 물품삭제.place(x=700, y=310)
+# 물품비우기.place(x=700, y=230)
+Set.place(x=430, y=120)
 tree.place(x=170,y=210)
 리스트.place(x=48, y=236)
 
