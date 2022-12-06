@@ -201,13 +201,27 @@ def check(): #값 출력해서 확인하는 용도
     path = Path(room1)
     messagebox.showinfo("", str(path.is_file()))
     # messagebox.showinfo("",)
+
 def save(): #저장관련: 개인정보, tree에 있는 목록 저장
     room=빈소.get()
-    messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
+    pinfo=[room,고인명.get(),상주명.get(),ID.get()]
+    empty=False
+
+    for i in range (len(pinfo)):
+        if(pinfo[i]==""):
+            empty=True
+    if(empty==True):
+        messagebox.showinfo("", "정보를 입력해 주세요")
+        empty=False
+    else:
+        save_go()
+
+    # messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
 #저장 항목: ID, 고인명, 상주명, 빈소, tree
-    if (room == ""):
-        messagebox.showinfo("", "빈소를 정해주세요")
-    elif ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")):
+def save_go():
+    room = 빈소.get()
+    if ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")):
+
 
         # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
         if (room == "1"):
@@ -489,14 +503,6 @@ def loadxl():
         상주명.delete(0, END)
         빈소.delete(0, END)
 
-        if (info.cell(row=1, column=1).value==""):
-            ID.insert(0," ")
-        if (info.cell(row=1, column=2).value==""):
-            고인명.insert(0," ")
-        if (info.cell(row=1, column=3).value==""):
-            상주명.insert(0," ")
-
-
         ID.insert(0,info.cell(row=1, column=1).value)
         고인명.insert(0,info.cell(row=1, column=2).value)
         상주명.insert(0,info.cell(row=1, column=3).value)
@@ -536,6 +542,7 @@ def loadxl():
 
         put=[]
         get=[]
+        new_l.clear()
         for i in range(1,count+1):
             for j in range(1,6):
                 get.append(items.cell(row=i,column=j).value)
@@ -548,8 +555,8 @@ def loadxl():
             tree.insert('', 'end', text=" ", values=put[i])
 
         tree.place(x=170, y=210)
-        clear_new_l()
-        messagebox.showinfo(new_l[0])
+        # clear_new_l()
+        # messagebox.showinfo(new_l[0])
         # tree.bind("<Double-Button-1>", click_del)
 
         close()
