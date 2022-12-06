@@ -43,7 +43,6 @@ def openxl(): #기본 물품에 item 추가
         first()
         close()
 
-    #
     openxl=Tk()
 
     openxl.geometry("300x170")  # 창의 크기
@@ -372,7 +371,6 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
 
     # messagebox.showinfo("",str(og_l[num+1][2])+" "+str(og_l[num+1][3])+" "+str(og_l[num+1][4])+" "+str(og_l[num+1][5]))
 
-#------
 
     global tree
     del tree
@@ -441,7 +439,6 @@ def clickEvent_delete(event):
     selected_item = tree.selection()[0]  ## get selected item
     # new_l=[]
     tree.delete(selected_item)
-
 def loadxl():
     def close():
         loadxl.quit()
