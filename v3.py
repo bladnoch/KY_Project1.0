@@ -633,6 +633,7 @@ wb= openpyxl.load_workbook(home, data_only=True) #초기 시트 위치 저장(�
 ws=wb['Sheet1'] #초기 시트 사용 선언
 ws2=wb['Sheet2']
 ws3=wb['Sheet3']
+wslist=[ws,ws2,ws3]
 
 
 global rooms
