@@ -9,20 +9,20 @@ import tkinter.ttk
 import tkinter as tk
 
 
-def del_t():
+def del_t(): #오른쪽 트리 삭제용
     tree.delete(*tree.get_children())
 def openxl(): #기본 물품에 item 추가
     # os.system(home)
-    def close():
+    def close(): #취소 버튼(openxl 종료)
         openxl.quit()
         openxl.destroy()
-    def add_in():
+    def add_in(): # 저장 버튼
         row=[]
         count=0
-        for rows in ws.iter_rows():  # 기본 물품의 rows 값
+        for rows in ws.iter_rows():  # ws시트 row 길이를 count에 저장
             count += 1
 
-        for j in range(1,8):
+        for j in range(1,8): #ws시트의 3(물품명),4(단위),5(단가)번 column만 저장하고 6,7 column은 빈 텍스트로 받는다. 25~39
             if (j==3):
                 row.append(e_item.get())
                 ws.cell(row=count+1,column=j).value=e_item.get()
@@ -40,10 +40,10 @@ def openxl(): #기본 물품에 item 추가
         리스트.delete(0,count+1)
 
 
-        first()
-        close()
+        first() #메소드 사용
+        close() #창 닫기
 
-    openxl=Tk()
+    openxl=Tk() #새로운 창 관련
 
     openxl.geometry("300x170")  # 창의 크기
     openxl.title("물품 추가")  # 창의 제목
