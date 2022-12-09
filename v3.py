@@ -11,7 +11,7 @@ import tkinter as tk
 
 def del_t(): #오른쪽 트리 삭제용
     tree.delete(*tree.get_children())
-def openxl(): #기본 물품에 item 추가
+def openxl(): #물품추가 버튼 (엑셀 자동으로 열리게 만들면 사라질 예정)
     # os.system(home)
     def close(): #취소 버튼(openxl 종료)
         openxl.quit()
@@ -200,7 +200,7 @@ def check(): #값 출력해서 확인하는 용도 (영향 없음)
     path = Path(room1)
     messagebox.showinfo("", str(path.is_file()))
     # messagebox.showinfo("",)
-def save(): #저장관련: 빈소, 고인명, 상주명, id 확인
+def save(): #저장 버튼 (저장관련: 빈소, 고인명, 상주명, id 확인)
     room=빈소.get()
     pinfo=[room,고인명.get(),상주명.get(),ID.get()] #개인정보 pinfo리스트에 추가
     empty=False
@@ -215,7 +215,7 @@ def save(): #저장관련: 빈소, 고인명, 상주명, id 확인
         save_go()
 
     # messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
-def save_go():
+def save_go(): #실제 저장 실행
     room = 빈소.get() #빈소 호수 저장
     if ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")): #room이 1~6사이이면 실행
 
@@ -350,31 +350,31 @@ def save_go():
             nwb.save(room6)
     else:
         messagebox.showinfo('없는 빈소',"정확한 빈소명을 입력해주세요")
-def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 tree에 추가
-    eventNum=list(리스트.curselection())
-    num=eventNum[0]
-    # messagebox.showinfo("",num)
+def clickEvent(event): #리스트박스 더블 클릭하면 실행(인덱스 받아서 tree에 추가)
+    eventNum=list(리스트.curselection()) #누른 물건의 인덱스를 받는다
+    num=eventNum[0] #받은 인덱스의 형을 인트로 받는다
+    # messagebox.showinfo("",eventNum)
 
     row=[]
     count=0
-    for rows in ws.iter_rows(): #기본 물품의 rows 값
+    for rows in ws.iter_rows(): #기본 물품의 rows 길이 저장
         count += 1
 
     for i in range(1, (count + 1)):  # og_list에 기본 물품 저장
         for j in range(1, 8):
             row.append(ws.cell(row=i, column=j).value)
-        og_l.append(row)
+        og_l.append(row) #og_l에 왼쪽 목록의 물건들과 정보 저장
         row = []
 
     # messagebox.showinfo("",str(og_l[num+1][2])+" "+str(og_l[num+1][3])+" "+str(og_l[num+1][4])+" "+str(og_l[num+1][5]))
 
 
-    global tree
-    del tree
+    global tree #전역변수 tree 생성
+    del tree #뭐더라...
     treelist = []
 
     tree= tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-                                    displaycolumns=["one", "two", "three", "four", "five"], height=24)
+                                    displaycolumns=["one", "two", "three", "four", "five"], height=24) #tree생성 column 5개
 
     tree.column("#0", width=10, anchor="center")
     tree.heading("#0", text="", anchor="center")
@@ -397,63 +397,63 @@ def clickEvent(event): #리스트박스 더블 클릭하면 인덱스 받아서 
 
     get = []
 
-    for i in range(2,7):
-        if(i==5):
+    for i in range(2,7):#정보 입력을 위해 og_l과 num(index 위치)를 이용해 new_l(오른쪽 목록에 추가되는 물건들의 정보를 저장)에 저장
+        if(i==5): #5는 수량 수량지정을 안 만들어서 무조건 1로 고정
             og_l[num+1][i]=1
-        elif(i==6):
+        elif(i==6): #(4)단가* (5)수량을 6변째 column에 저장
             og_l[num+1][i]=og_l[num+1][i-2]*og_l[num+1][i-1]
         get.append(og_l[num+1][i])
     # treelist.append(get)
-    new_l.append(get)
+    new_l.append(get) #최종적으로 new_l에 저장
 
     del_t()
         # messagebox.showinfo("", og_l[num+1][i])
     if (len(new_l)>=1):
-        for i in range(len(new_l)):
+        for i in range(len(new_l)): #new_l의 정보를 tree에 추가
 
             tree.insert('', 'end', text="", values=new_l[i])
             # messagebox.showinfo("", new_l[i])
             # messagebox.showinfo("", len(new_l))
         # messagebox.showinfo("treelist[i]",new_l[i])
 
-        tree.place(x=170,y=210)
-        tree.bind("<Double-Button-1>", clickEvent_delete)
+        tree.place(x=170,y=210) #새로운 tree 위치 지정
+        tree.bind("<Double-Button-1>", clickEvent_delete) #이 새로생긴 트리에 함수를 지정(tree를 더블 클릭하면 물건을 지우기 위해)
 
     # get.clear()
     # tree.delete(*tree.get_children())
-    win.update()
-def clickEvent_delete(event):
-    selectedItem=tree.selection()[0]
+    win.update() #win화면 업데이트
+def clickEvent_delete(event): #tree 더블클릭하면 실행
+    selectedItem=tree.selection()[0] #tree 선택한 위치 받기
     # messagebox.showinfo("",tree.item(selectedItem)['values'][0])
     # messagebox.showinfo("",len(new_l))
     for i in range(len(new_l)): #삭제될 tree 요소를 list에서도 삭제
-        if(tree.item(selectedItem)['values'][0]==new_l[i][0]):
-            new_l.remove(new_l[i])
+        if(tree.item(selectedItem)['values'][0]==new_l[i][0]): #선택된 트리의 값과 new_l에 저장되있던 값이 겹치는게 있으면
+            new_l.remove(new_l[i]) #겹쳐진 new_l의 row 값을 삭제
             break;
 
     # messagebox.showinfo("",tree.item(selectedItem)['values'][1])
 
     selected_item = tree.selection()[0]  ## get selected item
     # new_l=[]
-    tree.delete(selected_item)
-def loadxl():
-    def close():
+    tree.delete(selected_item) #트리에 저장된 정보 삭제
+def loadxl(): #불러오기 버튼
+    def close(): #제삭
         loadxl.quit()
         loadxl.destroy()
     def load_btn():
-        def click_delete(event):
+        def click_delete(event): #트리에서 항목 더블클리(삭제)
             selectedItem = tree.selection()[0]
-            for i in range(len(new_l)):  # 삭제될 tree 요소를 list에서도 삭제
-                if (tree.item(selectedItem)['values'][0] == new_l[i][0]):
-                    new_l.remove(new_l[i])
+            for i in range(len(new_l)):  # 선택한 트리속 목록을 new_l과 비교
+                if (tree.item(selectedItem)['values'][0] == new_l[i][0]): #new_l을 확인하고
+                    new_l.remove(new_l[i]) #new_l에서 삭제
                     break;
             selection = tree.selection()[0]
-            tree.delete(selection)
+            tree.delete(selection) #선택된 항목 트리에서 삭제
 
-        roomNum=l_room.get()
+        roomNum=l_room.get() #입력한 호수 저장
         # messagebox.showinfo("",roomNum)
 
-        rooms=[room1,room2,room3,room4,room5,room6]
+        rooms=[room1,room2,room3,room4,room5,room6] #리스트 rooms에 방 6개의 주소 저장
 
         for i in range(6): #사용할 시트를 찾아서 시트에 맞는 info,items 사용
             nwb = openpyxl.load_workbook(rooms[i])
@@ -473,8 +473,6 @@ def loadxl():
         고인명.insert(0,info.cell(row=1, column=2).value)
         상주명.insert(0,info.cell(row=1, column=3).value)
         빈소.insert(0,info.cell(row=1, column=4).value)
-
-
 
 
         tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
@@ -501,7 +499,7 @@ def loadxl():
 
 
         count=0
-        for rows in items.iter_rows():  # 기본 물품의 rows 값
+        for rows in items.iter_rows():  # 선택된 파일의 items시트의 rows 값
             count += 1
         # messagebox.showinfo("","선택한 시트의 rows 갯수"+str(count))
 
@@ -514,15 +512,15 @@ def loadxl():
                 get.append(items.cell(row=i,column=j).value)
                 # messagebox.showinfo("",items.cell(row=i,column=j).value)
             put.append(get)
-            new_l.append(get)
+            new_l.append(get) #new_l에 저장
             get=[]
         # messagebox.showinfo("",len(put))
         for i in range(len(put)):
-            tree.insert('', 'end', text=" ", values=put[i])
+            tree.insert('', 'end', text=" ", values=put[i]) #tree에 출력
 
 
         tree.place(x=170, y=210)
-        tree.bind("<Double-Button-1>", click_delete) #-----------------------------------------------------
+        tree.bind("<Double-Button-1>", click_delete) #트리 더블클릭하면 실행
 
 
         # selected_item = tree.item()  ## get selected item
@@ -535,7 +533,7 @@ def loadxl():
 
 
 
-    loadxl=Tk()
+    loadxl=Tk() #불러오기 하면 나오는 화면
 
     loadxl.geometry("300x120")  # 창의 크기
     loadxl.title("불러오기")  # 창의 제목
@@ -559,9 +557,9 @@ def loadxl():
     cancel.place(x=145,y=55)
 
     loadxl.mainloop()
-def openfile():
+def openfile(): #작동 안됨 영향 없음
     os.system(home)
-def shifter1():
+def shifter1(): #시연용 급하게 추가한 함수
     리스트.delete(0,END)
     og_l = []
     count=0
@@ -577,7 +575,7 @@ def shifter1():
 
     for i in range(1, count):
         리스트.insert(i - 1, og_l[i][2])
-def shifter2():
+def shifter2(): #시연용 급하게 추가한 함수
     리스트.delete(0,END)
     og_l = []
     count=0
@@ -592,7 +590,7 @@ def shifter2():
 
     for i in range(1, count):
         리스트.insert(i - 1, og_l[i][2])
-def shifter3():
+def shifter3(): #시연용 급하게 추가한 함수
     리스트.delete(0,END)
     og_l=[]
     # messagebox.showinfo("","hello")
