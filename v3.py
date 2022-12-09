@@ -22,8 +22,8 @@ def openxl(): #기본 물품에 item 추가
         for rows in ws.iter_rows():  # ws시트 row 길이를 count에 저장
             count += 1
 
-        for j in range(1,8): #ws시트의 3(물품명),4(단위),5(단가)번 column만 저장하고 6,7 column은 빈 텍스트로 받는다. 25~39
-            if (j==3):
+        for j in range(1,8): #ws시트의 3(물품명),4(단위),5(단가)번 column만 저장하고 6,7 column은 빈 텍스트로 받는다.
+            if (j==3): #row에 추가
                 row.append(e_item.get())
                 ws.cell(row=count+1,column=j).value=e_item.get()
             elif (j==4):
@@ -35,8 +35,8 @@ def openxl(): #기본 물품에 item 추가
             else:
                 row.append(" ")
                 ws.cell(row=count+1, column=j).value = ""
-            og_l.append(row)
-        wb.save(home)
+            og_l.append(row) #og_l에 row추가
+        wb.save(home) #
         리스트.delete(0,count+1)
 
 
@@ -83,14 +83,14 @@ def openxl(): #기본 물품에 item 추가
     cancel.place(x=150,y=115)
 
     openxl.mainloop()
-def close():
+def close(): #닫기 버튼
     win.quit()
     win.destroy()
 def first(): #첫 시작시 실행, if엑셀 파일 생성, og_l에 목록 삽입, 빈 트리 생성
     row=[]
     count=0
 
-    for i in range(1,7): #room 엑셀이 없으면 엑셀 생성
+    for i in range(1,7): #room 엑셀이 없으면 엑셀 파일 생성
         path = Path(rooms[i])
         if (str(path.is_file()) == "False"):
             nwb = openpyxl.Workbook()  # 엑셀 생성
@@ -113,24 +113,24 @@ def first(): #첫 시작시 실행, if엑셀 파일 생성, og_l에 목록 삽�
 
     global tree
     tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three", "four", "five"],
-                                displaycolumns=["one", "two", "three", "four", "five"], height=24)
+                                displaycolumns=["one", "two", "three", "four", "five"], height=24) #5개 창 생성
 
-    tree.column("#0", width=10, anchor="center")
+    tree.column("#0", width=10, anchor="center") #1
     tree.heading("#0", text="", anchor="center")
 
-    tree.column("#1", width=100, anchor="center")
+    tree.column("#1", width=100, anchor="center") #2
     tree.heading("#1", text="물품명", anchor="center")
 
-    tree.column("#2", width=100, anchor="center")
+    tree.column("#2", width=100, anchor="center") #3
     tree.heading("#2", text="단위", anchor="center")
 
-    tree.column("#3", width=100, anchor="center")
+    tree.column("#3", width=100, anchor="center") #4
     tree.heading("#3", text="단가", anchor="center")
 
-    tree.column("#4", width=100, anchor="center")
+    tree.column("#4", width=100, anchor="center") #5
     tree.heading("#4", text="수량", anchor="center")
 
-    tree.column("#5", width=100, anchor="center")
+    tree.column("#5", width=100, anchor="center") #6
     tree.heading("#5", text="금액", anchor="center")
 
     if (opener == True): #처음 열때는 빈 tree로 출력
@@ -143,18 +143,18 @@ def first(): #첫 시작시 실행, if엑셀 파일 생성, og_l에 목록 삽�
         for i in range(len(treelist)):
             tree.insert('', 'end', text="", values=treelist[i])
 
-    else:
+    else: #처음 연게 아닐경우
         get = []
-        for i in range(1, count):
-            for j in range(2, 7):
-                get.append(og_l[i][j])
-            treelist.append(get)
-            get = []
-        for i in range(len(treelist)):
-            tree.insert('', 'end', text=str(i + 2), values=treelist[i])
+        for i in range(1, count): #1~row길이만큼 반복
+            for j in range(2, 7): #2~6 반복
+                get.append(og_l[i][j]) #og_l에 있는 정보를 get리스트에 저장
+            treelist.append(get) #treelist에 저장
+            get = [] #리스트 get 비운다
+        for i in range(len(treelist)): #treelist 길이만큼 반복
+            tree.insert('', 'end', text=str(i + 2), values=treelist[i]) #tree에 treelist 입력
 
-    tree.delete(*tree.get_children())
-def call_tree(): #아직 사용 안함
+    tree.delete(*tree.get_children()) #출력 후 tree를 비운다(다음 받을 tree를 출력하기 위해)
+def call_tree(): #아직 사용 안함 (영향 없음)
     count = 0
     for rows in ws.iter_rows():  # 기본 물품의 rows 값
         count += 1
@@ -193,56 +193,53 @@ def call_tree(): #아직 사용 안함
 
     tree.delete(*tree.get_children())
     win.update()
-def check(): #값 출력해서 확인하는 용도
+def check(): #값 출력해서 확인하는 용도 (영향 없음)
     count = 0
     for rows in ws.iter_rows():  # 기본 물품의 rows 값
         count += 1
     path = Path(room1)
     messagebox.showinfo("", str(path.is_file()))
     # messagebox.showinfo("",)
-def save(): #저장관련: 개인정보, tree에 있는 목록 저장
+def save(): #저장관련: 빈소, 고인명, 상주명, id 확인
     room=빈소.get()
-    pinfo=[room,고인명.get(),상주명.get(),ID.get()]
+    pinfo=[room,고인명.get(),상주명.get(),ID.get()] #개인정보 pinfo리스트에 추가
     empty=False
 
-    for i in range (len(pinfo)):
+    for i in range (len(pinfo)): #pinfo 리스트를 반복해서 리스트에 정보가 하나라도 없으면 empty=True
         if(pinfo[i]==""):
             empty=True
-    if(empty==True):
+    if(empty==True): #empty가 True면 메세지 박스 실행
         messagebox.showinfo("", "정보를 입력해 주세요")
-        empty=False
-    else:
+        empty=False #다시 버튼이 눌렸을때를 위해 다시 False로 바꿔준다
+    else: #모든 정보가 있어서 empty가 False면 save_go() 실행
         save_go()
 
     # messagebox.showinfo("","빈소"+room+"에 저장 하시겠습니까?")
 def save_go():
-    room = 빈소.get()
-    if ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")):
-
+    room = 빈소.get() #빈소 호수 저장
+    if ((room=="1")|(room=="2")|(room=="3")|(room=="4")|(room=="5")|(room=="6")): #room이 1~6사이이면 실행
 
         # 빈소에 넣은 숫자에 따라 사용하는 엑셀이 달라짐
         if (room == "1"):
-            nwb = openpyxl.load_workbook(room1)
-            info = nwb["info"]  # +sheet 이름 1
-            # items = nwb["items"]  # +sheet 이름 2
-            nwb.remove(nwb["items"])
-            items = nwb.create_sheet("items")
+            nwb = openpyxl.load_workbook(room1) #room1엑셀을 불러온다
+            info = nwb["info"]  #sheet 이름 1
+            # items = nwb["items"]  #sheet 이름 2
+            nwb.remove(nwb["items"]) #items 시트 삭제. 덮어쓸때 기존 시트 정보와 새로운 정보가 같이 나오기 때문에
+            items = nwb.create_sheet("items") #items 시트 다시 생성.
 
-
-
-
+            #개인정보 저장 위치
             info['A1'] = ID.get()
             info['B1'] = 고인명.get()
             info['C1'] = 상주명.get()
             info['D1'] = room
 
-            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)
-                for j in range(5):
+            for i in range(len(new_l)): #트리에 있던 값 저장(new_l)의 길이만큼 반복
+                for j in range(5): #필요한 정보 5개만큼 반복
                     # loc=alp[j]+str(i)
-                    items.cell(row=i+1,column=j+1).value=new_l[i][j]
+                    items.cell(row=i+1,column=j+1).value=new_l[i][j] #items 시트에 new_l의 정보 저장
                     # messagebox.showinfo("",new_l[i][j])
 
-            nwb.save(room1)
+            nwb.save(room1) #엑셀 파일 저장
 
         elif (room == "2"):
             nwb = openpyxl.load_workbook(room2)
