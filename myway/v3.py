@@ -611,18 +611,19 @@ def shifter3(): #시연용 급하게 추가한 함수
     win.update()
 ##################################################   global variable   ##########################
 
-home = 'excelhere/test.xlsx' #기본 물품 엑셀 위치 저장
+home = '/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/test.xlsx' #기본 물품 엑셀 위치 저장
 
-room1='excelhere/room_one.xlsx'
-room2='excelhere/room_two.xlsx'
-room3='excelhere/room_three.xlsx'
-room4='excelhere/room_four.xlsx'
-room5='excelhere/room_five.xlsx'
-room6='excelhere/room_six.xlsx'
+room1='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_one.xlsx'
+room2='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_two.xlsx'
+room3='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_three.xlsx'
+room4='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_four.xlsx'
+room5='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_five.xlsx'
+room6='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_six.xlsx'
 
 nwb = openpyxl.Workbook()  # 엑셀 생성
 info=nwb.create_sheet("info")  # +sheet 이름 1
 items=nwb.create_sheet("items")  # +sheet 이름 2
+
 
 wb= openpyxl.load_workbook(home, data_only=True) #초기 시트 위치 저장(값으로)
 ws=wb['Sheet1'] #초기 시트 사용 선언

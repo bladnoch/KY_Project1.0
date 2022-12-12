@@ -48,3 +48,34 @@
 
 import openpyxl
 import subprocess
+
+def setog_sheets(): #왼쪽 시트별 길이 저장 =>og_row(3개 기준)
+    count = 0
+    for i in range(len(og_sheets)):
+        for rows in og_sheets[i].iter_rows():  # ws시트 row 길이를 count에 저장
+            count += 1
+        og_row[i]=count
+        count=0
+
+home = '/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/test.xlsx' #
+room1='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_one.xlsx'
+room2='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_two.xlsx'
+room3='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_three.xlsx'
+room4='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_four.xlsx'
+room5='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_five.xlsx'
+room6='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_six.xlsx'
+
+og_file= openpyxl.load_workbook(home, data_only=True) #초기 시트 위치 저장(값으로)
+
+og_sheets=[og_file['Sheet1'],og_file['Sheet2'],og_file['Sheet3']]  #시트 리스트에 저장 시트 이름 바꾸면 같이 바꿔야 함
+og_row=['','',''] #길이 저장
+
+og_l=[]
+new_l=[]
+
+og_p=[]
+new_p=[]
+
+setog_sheets()
+for i in range(3):
+    print(og_row[i])
