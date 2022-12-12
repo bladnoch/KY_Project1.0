@@ -57,6 +57,18 @@ def setog_sheets(): #왼쪽 시트별 길이 저장 =>og_row(3개 기준)
         og_row[i]=count
         count=0
 
+def setlist(): #og_l에 셀 값 저장(2개)
+    row=[]
+    for i in range(len(og_l)):
+         for k in range(1, (og_row[i] + 1)):  # og_l[i] row 길이만큼 반복
+            for j in range(1, 3):
+                row.append(og_sheets[i].cell(row=k, column=j).value)
+            og_l[i].append(row)
+            row = []
+
+    for i in range(len(og_l)):
+        print(og_l[i])
+
 home = '/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/test.xlsx' #
 room1='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_one.xlsx'
 room2='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_two.xlsx'
@@ -70,12 +82,14 @@ og_file= openpyxl.load_workbook(home, data_only=True) #초기 시트 위치 저�
 og_sheets=[og_file['Sheet1'],og_file['Sheet2'],og_file['Sheet3']]  #시트 리스트에 저장 시트 이름 바꾸면 같이 바꿔야 함
 og_row=['','',''] #길이 저장
 
-og_l=[]
+og_l=[[],[],[]]
 new_l=[]
 
 og_p=[]
 new_p=[]
 
 setog_sheets()
+
 for i in range(3):
     print(og_row[i])
+setlist()
