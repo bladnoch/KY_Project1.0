@@ -69,13 +69,26 @@ def setlist(): #og_l에 셀 값 저장(2개)
     for i in range(len(og_l)):
         print(og_l[i])
 
+#시트기준
+#Sheet1= peersonal info devied by row
+#other sheets=items by room
+
+
+#빈소 특 101,102,201,202, 안치1, 안치2, 안치3
+# sp101
+# sp102
+# sp201
+# sp202
+# ahn1
+# ahn2
+# ahn3
 home = '/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/test.xlsx' #
 room1='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_one.xlsx'
 room2='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_two.xlsx'
 room3='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_three.xlsx'
-room4='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_four.xlsx'
 room5='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_five.xlsx'
 room6='/Users/doungukkim/Desktop/workspace/python/restinpeace/myway/excel/room_six.xlsx'
+
 
 og_file= openpyxl.load_workbook(home, data_only=True) #초기 시트 위치 저장(값으로)
 
