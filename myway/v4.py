@@ -59,6 +59,7 @@ from openpyxl.worksheet.table import Table, TableStyleInfo
 import tkinter.ttk
 import tkinter as tk
 
+#왼쪽 목록 관련 함수
 def del_t(): #오른쪽 트리 삭제용
     tree.delete(*tree.get_children())
 def left_tree1():
@@ -70,8 +71,8 @@ def left_tree1():
     for i in range(1,(og_row[0])):
         tree.insert('', 'end', text="", values=og_l[0][i])
         og_p.append(og_l[0][i])
-        print(og_p[i - 1])
-    tree.place(x=10, y=300)
+        # print(og_p[i - 1])
+    tree.place(x=10, y=200)
 def left_tree2():
     og_p = []
     del_t()
@@ -81,8 +82,9 @@ def left_tree2():
     for i in range(1, (og_row[1])):
         tree.insert('', 'end', text="", values=og_l[1][i])
         og_p.append(og_l[1][i])
-        print(og_p[i - 1])
-    tree.place(x=10, y=300)
+        # print(og_p[i - 1])
+
+    tree.place(x=10, y=200)
 def left_tree3():
     og_p = []
     del_t()
@@ -92,7 +94,7 @@ def left_tree3():
     for i in range(1, (og_row[2])):
         tree.insert('', 'end', text="", values=og_l[2][i])
         og_p.append(og_l[2][i])
-    tree.place(x=10, y=300)
+    tree.place(x=10, y=200)
 def left_tree4():
     og_p=[]
     del_t()
@@ -101,7 +103,7 @@ def left_tree4():
     for i in range(1, (og_row[3])):
         tree.insert('', 'end', text="", values=og_l[3][i])
         og_p.append(og_l[3][i])
-    tree.place(x=10, y=300)
+    tree.place(x=10, y=200)
 def left_tree5():
     og_p=[]
     del_t()
@@ -110,10 +112,9 @@ def left_tree5():
     for i in range(1, (og_row[4])):
         tree.insert('', 'end', text="", values=og_l[4][i])
         og_p.append(og_l[4][i])
-        print(og_p[i-1])
-    tree.place(x=10, y=300)
-
-def og_sheets_row(): #왼쪽 시트별 길이 저장 =>og_row(3개 기준)
+        # print(og_p[i-1])
+    tree.place(x=10, y=200)
+def og_sheets_row(): #왼쪽 시트별 길이 저장 =>og_row(5개 기준)
     count = 0
     for i in range(len(og_sheets)):
         for rows in og_sheets[i].iter_rows():  # ws시트 row 길이를 count에 저장
@@ -126,8 +127,18 @@ def setlist(): #셀 값 저장 => og_l 시트 3개 기준(column 2개)
     for i in range(len(og_l)): #og_l리스트 길이만큼(5)
          for k in range(1, (og_row[i] + 1)):  # og_l[i] row 길이만큼 반복
             for j in range(1, 4): #column 1,2,3 저장 (품명,가격,수량)
-                row.append(og_sheets[i].cell(k,j).value)
+                if(k==1):
+                    row.append(og_sheets[i].cell(k,j).value)
+                elif(type(og_sheets[i].cell(k, j).value)==float):
+                    row.append(int(og_sheets[i].cell(k,j).value))
+                    # print(type(int(og_sheets[i].cell(k, j).value)))
+                elif((og_sheets[i].cell(k, j).value==None)):
+                    row.append(int(0))
+                else:
+                    row.append(og_sheets[i].cell(k, j).value)
+
             og_l[i].append(row)
+            # print(og_l[i])
             row = []
     # for i in range(len(og_l)):
     #     print(og_l[i])
@@ -136,8 +147,6 @@ def setlist(): #셀 값 저장 => og_l 시트 3개 기준(column 2개)
 
 if __name__ == "__main__":
 #시트기준
-#Sheet1= peersonal info devied by row
-#other sheets=items by room
 
 
 #빈소 특 101,102,201,202, 안치1, 안치2, 안치3
@@ -191,14 +200,35 @@ tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three"],
 tree.column("#0", width=10, anchor="center")  # 1
 tree.heading("#0", text="", anchor="center")
 
-tree.column("#1", width=100, anchor="center")  # 2
+tree.column("#1", width=90, anchor="center")  # 2
 tree.heading("#1", text="물품명", anchor="center")
 
 tree.column("#2", width=100, anchor="center")  # 3
-tree.heading("#2", text="금액", anchor="center")
+tree.heading("#2", text="단가", anchor="center")
 
 tree.column("#3", width=100, anchor="center")  # 4
 tree.heading("#3", text="수량", anchor="center")
+
+#-------------------------------------------------
+
+tree2 = tkinter.ttk.Treeview(win, columns=["one", "two", "three","four"],
+                            displaycolumns=["one", "two", "three","four"], height=24)  # 5개 창 생성
+
+tree2.column("#0", width=10, anchor="center")  # 0
+tree2.heading("#0", text="", anchor="center")
+
+tree2.column("#1", width=100, anchor="center")  # 1
+tree2.heading("#1", text="물품명", anchor="center")
+
+tree2.column("#2", width=100, anchor="center")  # 2
+tree2.heading("#2", text="단가", anchor="center")
+
+tree2.column("#3", width=100, anchor="center")  # 3
+tree2.heading("#3", text="수량", anchor="center")
+
+tree2.column("#4", width=100, anchor="center")  # 4
+tree2.heading("#4", text="금액", anchor="center")
+
 
 #-------------------------------------------------
 
@@ -222,8 +252,8 @@ tree.heading("#3", text="수량", anchor="center")
 시트5.config(width=7,height=2,command=left_tree5)
 시트5.place(x=370,y=10)
 
-tree.place(x=10,y=300)
-
+tree.place(x=10,y=200)
+tree2.place(x=500,y=200)
 
 
 win.mainloop() # 창 실행
