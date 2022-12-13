@@ -62,47 +62,55 @@ import tkinter as tk
 def del_t(): #오른쪽 트리 삭제용
     tree.delete(*tree.get_children())
 def left_tree1():
+    og_p=[]
     del_t()
     og_sheets_row()
     setlist()
 
     for i in range(1,(og_row[0])):
         tree.insert('', 'end', text="", values=og_l[0][i])
-
+        og_p.append(og_l[0][i])
+        print(og_p[i - 1])
     tree.place(x=10, y=300)
 def left_tree2():
+    og_p = []
     del_t()
     og_sheets_row()
     setlist()
 
     for i in range(1, (og_row[1])):
         tree.insert('', 'end', text="", values=og_l[1][i])
-
+        og_p.append(og_l[1][i])
+        print(og_p[i - 1])
     tree.place(x=10, y=300)
 def left_tree3():
+    og_p = []
     del_t()
     og_sheets_row()
     setlist()
 
     for i in range(1, (og_row[2])):
         tree.insert('', 'end', text="", values=og_l[2][i])
-
+        og_p.append(og_l[2][i])
     tree.place(x=10, y=300)
 def left_tree4():
+    og_p=[]
     del_t()
     og_sheets_row()
     setlist()
     for i in range(1, (og_row[3])):
         tree.insert('', 'end', text="", values=og_l[3][i])
-
+        og_p.append(og_l[3][i])
     tree.place(x=10, y=300)
 def left_tree5():
+    og_p=[]
     del_t()
     og_sheets_row()
     setlist()
     for i in range(1, (og_row[4])):
         tree.insert('', 'end', text="", values=og_l[4][i])
-
+        og_p.append(og_l[4][i])
+        print(og_p[i-1])
     tree.place(x=10, y=300)
 
 def og_sheets_row(): #왼쪽 시트별 길이 저장 =>og_row(3개 기준)
@@ -112,9 +120,8 @@ def og_sheets_row(): #왼쪽 시트별 길이 저장 =>og_row(3개 기준)
             count += 1
         og_row[i]=count
         count=0
-
 def setlist(): #셀 값 저장 => og_l 시트 3개 기준(column 2개)
-    # og_sheets_row() #사용할때마다 row를 다시 구한다
+    og_sheets_row() #사용할때마다 row를 다시 구한다
     row=[]
     for i in range(len(og_l)): #og_l리스트 길이만큼(5)
          for k in range(1, (og_row[i] + 1)):  # og_l[i] row 길이만큼 반복
@@ -122,8 +129,8 @@ def setlist(): #셀 값 저장 => og_l 시트 3개 기준(column 2개)
                 row.append(og_sheets[i].cell(k,j).value)
             og_l[i].append(row)
             row = []
-    for i in range(len(og_l)):
-        print(og_l[i])
+    # for i in range(len(og_l)):
+    #     print(og_l[i])
 
 
 
@@ -162,11 +169,12 @@ if __name__ == "__main__":
     global og_p
     global new_p
 
-    og_sheets_row()
+    # og_sheets_row()
 
     # for i in range(5):
     #     print(og_row[i])
-    setlist()
+
+    # setlist()
 
 
 
@@ -175,6 +183,7 @@ win.geometry("1200x720") # 창의 크기
 win.title("장례식장 재고관리 프로그램 Ver1.221123") # 창의 제목
 win.option_add("*Font", "맑은고딕 12") # 전체 폰트
 
+#-------------------------------------------------
 
 tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three"],
                             displaycolumns=["one", "two", "three"], height=24)  # 5개 창 생성
@@ -191,6 +200,7 @@ tree.heading("#2", text="금액", anchor="center")
 tree.column("#3", width=100, anchor="center")  # 4
 tree.heading("#3", text="수량", anchor="center")
 
+#-------------------------------------------------
 
 시트1 = Button(win, text = "식당판매")
 시트1.config(width=7,height=2,command=left_tree1)
