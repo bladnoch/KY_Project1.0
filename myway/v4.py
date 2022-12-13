@@ -62,6 +62,9 @@ import tkinter as tk
 #왼쪽 목록 관련 함수
 def del_t(): #오른쪽 트리 삭제용
     tree.delete(*tree.get_children())
+def del_t2(): #오른쪽 트리 삭제용
+    tree2.delete(*tree2.get_children())
+
 def left_tree1():
     og_p=[]
     del_t()
@@ -121,7 +124,7 @@ def og_sheets_row(): #왼쪽 시트별 길이 저장 =>og_row(5개 기준)
             count += 1
         og_row[i]=count
         count=0
-def setlist(): #셀 값 저장 => og_l 시트 3개 기준(column 2개)
+def setlist(): #셀 값 저장 => og_l 시트 5개 기준(column 3개)
     og_sheets_row() #사용할때마다 row를 다시 구한다
     row=[]
     for i in range(len(og_l)): #og_l리스트 길이만큼(5)
@@ -142,8 +145,73 @@ def setlist(): #셀 값 저장 => og_l 시트 3개 기준(column 2개)
             row = []
     # for i in range(len(og_l)):
     #     print(og_l[i])
+def left_double(event): #왼쪽 물품 더블클릭
+    count=0
+    def close():
+        center_items()
+        count_item.quit()
+        count_item.destroy()
+    def go(): #확인 버튼
+        trash=event
+        selectedItem = tree.selection()[0]  # tree 선택한 위치 받기
+        #물품명 단가 수량 금액
+        row=[] #지역변수 리셋 필요 없음
+        row.append(tree.item(selectedItem)['values'][0]) #물품명
+        row.append(tree.item(selectedItem)['values'][1]) #단가
+        row.append(amount.get()) #수량
+        row.append(row[1]*int(row[2])) #금액
+
+        # messagebox.showinfo("",tree.item(selectedItem)['values'][0]) 물품명만 받기
+        new_p.append(row) #new_p에 저장(선택한 값 모두 받기
+        print(new_p)
+
+        close()
+    def enter_go(event): #엔터 사용을 위한 함수
+        selectedItem = tree.selection()[0]  # tree 선택한 위치 받기
+        # 물품명 단가 수량 금액
+        row = []  # 지역변수 리셋 필요 없음
+        row.append(tree.item(selectedItem)['values'][0])  # 물품명
+        row.append(tree.item(selectedItem)['values'][1])  # 단가
+        row.append(amount.get())  # 수량
+        row.append(row[1] * int(row[2]))  # 금액
+
+        # messagebox.showinfo("",tree.item(selectedItem)['values'][0]) 물품명만 받기
+        new_p.append(row)  # new_p에 저장(선택한 값 모두 받기
+        print(new_p)
+
+        close()
 
 
+    count_item = Tk()  # 불러오기 하면 나오는 화면
+
+    count_item.geometry("200x150")  # 창의 크기
+    count_item.title("수량 입력")  # 창의 제목
+    count_item.option_add("*Font", "맑은고딕 14")  # 전체 폰트
+
+    ontk = Label(count_item)
+    ontk.config(text="수량 :", width=10, relief="solid")
+    ontk.pack(side="top", pady=10)
+
+    amount = Entry(count_item)
+    amount.config(width=10, relief="solid", borderwidth=0)
+    amount.focus()
+    amount.bind("<Return>", enter_go)
+    amount.place(x=60,y=50)
+    amount.pack()
+
+    conf = Button(count_item, text="확인")
+    conf.config(width=10, height=3, command=go)
+    # conf.place(x=30,y=200)
+    conf.pack(side="bottom",pady=10)
+
+
+    count_item.mainloop()
+
+def center_items():
+    del_t2()
+    for i in range(len(new_p)):
+        tree2.insert('', 'end', text="", values=new_p[i])
+    tree2.place(x=500, y=200)
 
 if __name__ == "__main__":
 #시트기준
@@ -171,19 +239,13 @@ if __name__ == "__main__":
     og_sheets=[og_file['식당판매'], og_file['매점판매'], og_file['장의용품'], og_file['상복'], og_file['기타']]  #시트 리스트에 저장 시트 이름 바꾸면 같이 바꿔야 함
     og_row=['','','','',''] #길이 저장
     og_l=[[],[],[],[],[]] #column 2개에 있는 cell info each list에 저장
+    new_l=[] #불러오거나 저장핳때 사용할 예정
 
+    global og_p #왼쪽 목록 폼 출력용
+    global new_p #중앙 목록 폼 출력용
+    new_p=[]
+    global count
 
-    new_l=[]
-
-    global og_p
-    global new_p
-
-    # og_sheets_row()
-
-    # for i in range(5):
-    #     print(og_row[i])
-
-    # setlist()
 
 
 
@@ -253,7 +315,10 @@ tree2.heading("#4", text="금액", anchor="center")
 시트5.place(x=370,y=10)
 
 tree.place(x=10,y=200)
+tree.bind("<Double-Button-1>",left_double)
 tree2.place(x=500,y=200)
+
+
 
 
 win.mainloop() # 창 실행

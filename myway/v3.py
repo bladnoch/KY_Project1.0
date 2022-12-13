@@ -545,7 +545,6 @@ def loadxl(): #불러오기 버튼
 
     l_room = Entry(loadxl)
     l_room.config(width=20, relief="solid", borderwidth=2)
-
     l_room.place(x=110,y=20)
 
     load = Button(loadxl, text="저장")
