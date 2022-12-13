@@ -146,9 +146,8 @@ def setlist(): #셀 값 저장 => og_l 시트 5개 기준(column 3개)
     # for i in range(len(og_l)):
     #     print(og_l[i])
 def left_double(event): #왼쪽 물품 더블클릭
-    count=0
     def close():
-        center_items()
+        center_tree()
         count_item.quit()
         count_item.destroy()
     def go(): #확인 버튼
@@ -166,7 +165,7 @@ def left_double(event): #왼쪽 물품 더블클릭
         print(new_p)
 
         close()
-    def enter_go(event): #엔터 사용을 위한 함수
+    def go_enter(event): #엔터 사용을 위한 함수
         selectedItem = tree.selection()[0]  # tree 선택한 위치 받기
         # 물품명 단가 수량 금액
         row = []  # 지역변수 리셋 필요 없음
@@ -188,25 +187,24 @@ def left_double(event): #왼쪽 물품 더블클릭
     count_item.title("수량 입력")  # 창의 제목
     count_item.option_add("*Font", "맑은고딕 14")  # 전체 폰트
 
-    ontk = Label(count_item)
-    ontk.config(text="수량 :", width=10, relief="solid")
+    ontk = Label(count_item) #수량 레이블
+    ontk.config(text="수량", width=10, relief="solid")
     ontk.pack(side="top", pady=10)
 
-    amount = Entry(count_item)
+    amount = Entry(count_item) #수량 엔트리 go_enter 연결
     amount.config(width=10, relief="solid", borderwidth=0)
     amount.focus()
-    amount.bind("<Return>", enter_go)
+    amount.bind("<Return>", go_enter)
     amount.place(x=60,y=50)
     amount.pack()
 
-    conf = Button(count_item, text="확인")
-    conf.config(width=10, height=3, command=go)
+    conf = Button(count_item, text="확인") #확인 버튼
+    conf.config(width=10, height=3, command=go) #go 연결
     # conf.place(x=30,y=200)
     conf.pack(side="bottom",pady=10)
 
-
     count_item.mainloop()
-def center_items():
+def center_tree():
     del_t2()
     for i in range(len(new_p)):
         tree2.insert('', 'end', text="", values=new_p[i])
@@ -278,7 +276,7 @@ tree2 = tkinter.ttk.Treeview(win, columns=["one", "two", "three","four"],
 tree2.column("#0", width=10, anchor="center")  # 0
 tree2.heading("#0", text="", anchor="center")
 
-tree2.column("#1", width=100, anchor="center")  # 1
+tree2.column("#1", width=90, anchor="center")  # 1
 tree2.heading("#1", text="물품명", anchor="center")
 
 tree2.column("#2", width=100, anchor="center")  # 2
