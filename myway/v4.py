@@ -206,7 +206,6 @@ def left_double(event): #왼쪽 물품 더블클릭
 
 
     count_item.mainloop()
-
 def center_items():
     del_t2()
     for i in range(len(new_p)):
