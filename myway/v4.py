@@ -151,39 +151,45 @@ def left_double(event): #왼쪽 물품 더블클릭
         count_item.quit()
         count_item.destroy()
     def go(): #확인 버튼
-        trash=event
+        num=int(amount.get()) #입력된 텍스트(수량)저장
         selectedItem = tree.selection()[0]  # tree 선택한 위치 받기
         #물품명 단가 수량 금액
+
         row=[] #지역변수 리셋 필요 없음
-        row.append(tree.item(selectedItem)['values'][0]) #물품명
-        row.append(tree.item(selectedItem)['values'][1]) #단가
-        row.append(amount.get()) #수량
-        row.append(row[1]*int(row[2])) #금액
+        if(((tree.item(selectedItem)['values'][2])==None)| (tree.item(selectedItem)['values'][2]<num)):
+            messagebox.showinfo("","수량보다 많이 입력하였습니다.")
+        else:
+            tree.item(selectedItem)['values'][2]=num-int(tree.item(selectedItem)['values'][2])
+            print(tree.item(selectedItem)['values'][2])
 
-        # messagebox.showinfo("",tree.item(selectedItem)['values'][0]) 물품명만 받기
-        new_p.append(row) #new_p에 저장(선택한 값 모두 받기
+            row.append(tree.item(selectedItem)['values'][0]) #물품명
+            row.append(tree.item(selectedItem)['values'][1]) #단가
+            row.append(num) #수량
+            row.append(row[1]*num) #금액
+            # messagebox.showinfo("",tree.item(selectedItem)['values'][0]) 물품명만 받기
+            new_p.append(row) #new_p에 저장(선택한 값 모두 받기
         print(new_p)
-
         close()
     def go_enter(event): #엔터 사용을 위한 함수
-        selectedItem = tree.selection()[0]  # tree 선택한 위치 받기
-        # 물품명 단가 수량 금액
-        row = []  # 지역변수 리셋 필요 없음
-        row.append(tree.item(selectedItem)['values'][0])  # 물품명
-        row.append(tree.item(selectedItem)['values'][1])  # 단가
-        row.append(amount.get())  # 수량
-        row.append(row[1] * int(row[2]))  # 금액
-
-        # messagebox.showinfo("",tree.item(selectedItem)['values'][0]) 물품명만 받기
-        new_p.append(row)  # new_p에 저장(선택한 값 모두 받기
+        num = int(amount.get())
+        selectedItem = tree.selection()[0]
+        row = []
+        if (((tree.item(selectedItem)['values'][2]) == None) | (tree.item(selectedItem)['values'][2] < num)):
+            messagebox.showinfo("", "수량보다 많이 입력하였습니다.")
+        else:
+            row.append(tree.item(selectedItem)['values'][0])  # 물품명
+            row.append(tree.item(selectedItem)['values'][1])  # 단가
+            row.append(num)  # 수량
+            row.append(row[1] * num)  # 금액
+            # messagebox.showinfo("",tree.item(selectedItem)['values'][0]) 물품명만 받기
+            new_p.append(row)
         print(new_p)
-
         close()
 
 
     count_item = Tk()  # 불러오기 하면 나오는 화면
 
-    count_item.geometry("200x150")  # 창의 크기
+    count_item.geometry("200x150+500+300")  # 창의 크기
     count_item.title("수량 입력")  # 창의 제목
     count_item.option_add("*Font", "맑은고딕 14")  # 전체 폰트
 
@@ -202,8 +208,8 @@ def left_double(event): #왼쪽 물품 더블클릭
     conf.config(width=10, height=3, command=go) #go 연결
     # conf.place(x=30,y=200)
     conf.pack(side="bottom",pady=10)
-
     count_item.mainloop()
+
 def center_tree():
     del_t2()
     for i in range(len(new_p)):
@@ -246,76 +252,76 @@ if __name__ == "__main__":
 
 
 
-win = tk.Tk() # 창 생성
-win.geometry("1200x720") # 창의 크기
-win.title("장례식장 재고관리 프로그램 Ver1.221123") # 창의 제목
-win.option_add("*Font", "맑은고딕 12") # 전체 폰트
+    win = tk.Tk() # 창 생성
+    win.geometry("1200x720") # 창의 크기
+    win.title("장례식장 재고관리 프로그램 Ver1.221123") # 창의 제목
+    win.option_add("*Font", "맑은고딕 12") # 전체 폰트
 
-#-------------------------------------------------
+    #-------------------------------------------------
 
-tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three"],
-                            displaycolumns=["one", "two", "three"], height=24)  # 5개 창 생성
+    tree = tkinter.ttk.Treeview(win, columns=["one", "two", "three"],
+                                displaycolumns=["one", "two", "three"], height=24)  # 3개 창 생성
 
-tree.column("#0", width=10, anchor="center")  # 1
-tree.heading("#0", text="", anchor="center")
+    tree.column("#0", width=10, anchor="center")  # 1
+    tree.heading("#0", text="", anchor="center")
 
-tree.column("#1", width=90, anchor="center")  # 2
-tree.heading("#1", text="물품명", anchor="center")
+    tree.column("#1", width=90, anchor="center")  # 2
+    tree.heading("#1", text="물품명", anchor="center")
 
-tree.column("#2", width=100, anchor="center")  # 3
-tree.heading("#2", text="단가", anchor="center")
+    tree.column("#2", width=100, anchor="center")  # 3
+    tree.heading("#2", text="단가", anchor="center")
 
-tree.column("#3", width=100, anchor="center")  # 4
-tree.heading("#3", text="수량", anchor="center")
+    tree.column("#3", width=100, anchor="center")  # 4
+    tree.heading("#3", text="수량", anchor="center")
 
-#-------------------------------------------------
+    #-------------------------------------------------
 
-tree2 = tkinter.ttk.Treeview(win, columns=["one", "two", "three","four"],
-                            displaycolumns=["one", "two", "three","four"], height=24)  # 5개 창 생성
+    tree2 = tkinter.ttk.Treeview(win, columns=["one", "two", "three","four"],
+                                displaycolumns=["one", "two", "three","four"], height=24)  # 4개 창 생성
 
-tree2.column("#0", width=10, anchor="center")  # 0
-tree2.heading("#0", text="", anchor="center")
+    tree2.column("#0", width=10, anchor="center")  # 0
+    tree2.heading("#0", text="", anchor="center")
 
-tree2.column("#1", width=90, anchor="center")  # 1
-tree2.heading("#1", text="물품명", anchor="center")
+    tree2.column("#1", width=90, anchor="center")  # 1
+    tree2.heading("#1", text="물품명", anchor="center")
 
-tree2.column("#2", width=100, anchor="center")  # 2
-tree2.heading("#2", text="단가", anchor="center")
+    tree2.column("#2", width=100, anchor="center")  # 2
+    tree2.heading("#2", text="단가", anchor="center")
 
-tree2.column("#3", width=100, anchor="center")  # 3
-tree2.heading("#3", text="수량", anchor="center")
+    tree2.column("#3", width=100, anchor="center")  # 3
+    tree2.heading("#3", text="수량", anchor="center")
 
-tree2.column("#4", width=100, anchor="center")  # 4
-tree2.heading("#4", text="금액", anchor="center")
-
-
-#-------------------------------------------------
-
-시트1 = Button(win, text = "식당판매")
-시트1.config(width=7,height=2,command=left_tree1)
-시트1.place(x=10,y=10)
-
-시트2 = Button(win, text = "매점판매")
-시트2.config(width=7,height=2,command=left_tree2)
-시트2.place(x=100,y=10)
-
-시트3 = Button(win, text = "장의용품")
-시트3.config(width=7,height=2,command=left_tree3)
-시트3.place(x=190,y=10)
-
-시트4 = Button(win, text = "상복")
-시트4.config(width=7,height=2,command=left_tree4)
-시트4.place(x=280,y=10)
-
-시트5 = Button(win, text = "기타")
-시트5.config(width=7,height=2,command=left_tree5)
-시트5.place(x=370,y=10)
-
-tree.place(x=10,y=200)
-tree.bind("<Double-Button-1>",left_double)
-tree2.place(x=500,y=200)
+    tree2.column("#4", width=100, anchor="center")  # 4
+    tree2.heading("#4", text="금액", anchor="center")
 
 
+    #-------------------------------------------------
+
+    시트1 = Button(win, text = "식당판매")
+    시트1.config(width=7,height=2,command=left_tree1)
+    시트1.place(x=10,y=10)
+
+    시트2 = Button(win, text = "매점판매")
+    시트2.config(width=7,height=2,command=left_tree2)
+    시트2.place(x=100,y=10)
+
+    시트3 = Button(win, text = "장의용품")
+    시트3.config(width=7,height=2,command=left_tree3)
+    시트3.place(x=190,y=10)
+
+    시트4 = Button(win, text = "상복")
+    시트4.config(width=7,height=2,command=left_tree4)
+    시트4.place(x=280,y=10)
+
+    시트5 = Button(win, text = "기타")
+    시트5.config(width=7,height=2,command=left_tree5)
+    시트5.place(x=370,y=10)
+
+    tree.place(x=10,y=200)
+    tree.bind("<Double-Button-1>",left_double)
+    tree2.place(x=500,y=200)
+    # tree2.bind("<Double-Button-1>",center_double)
 
 
-win.mainloop() # 창 실행
+
+    win.mainloop() # 창 실행
